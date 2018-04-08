@@ -3,7 +3,22 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/logo_img"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/IDEDIT">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logo_image"
+            android:background="@drawable/logo_image"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/IDEDIT">
     <TextView
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
@@ -22,9 +37,65 @@
         />
     </RelativeLayout>
     <RelativeLayout
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_pw"
+        android:layout_below="@+id/IDEDIT">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/passwordtxt"
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:text="PW"/>
+        <EditText
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/passwordtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="text"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/buttonlayout"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/layout_pw"
         android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/login_btn"
+            android:text="login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/login_btn"
+            android:text="signup"
+            />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonlayout2"
+            android:layout_below="@+id/buttonlayout"
+            android:layout_centerInParent="true"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/find_id_btn"
+                android:text="id찾기"/>
+            <Button
+                android:layout_toRightOf="@+id/find_id_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/find_pw_btn"
+                android:text="pw찾기"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
