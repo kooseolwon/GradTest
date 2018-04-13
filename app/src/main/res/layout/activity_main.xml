@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.gradtest.MainActivity">
     <RelativeLayout
+        android:id="@+id/all_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#60369C">
@@ -37,6 +39,20 @@
             android:text="글쓰기"
             android:id="@+id/writting_btn"
             android:layout_toLeftOf="@+id/filter_btn"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/all_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler">
+
+        </android.support.v7.widget.RecyclerView>
+
+
 
     </RelativeLayout>
 
