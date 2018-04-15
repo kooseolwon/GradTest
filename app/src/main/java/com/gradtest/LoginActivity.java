@@ -19,6 +19,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         Button loginbtn = (Button)findViewById(R.id.login_btn);
         loginbtn.setOnClickListener(this);
+
+        Button signupbtn = (Button)findViewById(R.id.signup_btn);
+               signupbtn.setOnClickListener(this);
+                Button findpwbtn = (Button)findViewById(R.id.find_pw_btn);
+                findpwbtn.setOnClickListener(this);
     }
 
     @Override
@@ -28,6 +33,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.signup_btn:
+                                Intent intent2 = new Intent(LoginActivity.this, JoinActivity.class);
+                                startActivity(intent2);
+                               break;
+
+                                case R.id.find_pw_btn:
+                                Intent intent4 = new Intent(LoginActivity.this, Pw1Activity.class);
+                                startActivity(intent4);
+                                break;
         }
     }
 }
