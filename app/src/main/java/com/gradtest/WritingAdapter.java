@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by SM-PC on 2018-04-13.
  */
 
-public class WrittingAdapter extends RecyclerView.Adapter<WrittingAdapter.MyViewholder> {
+public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewholder> {
     private Activity activity;
     private ArrayList<ItemForm> datalist;
 
@@ -35,7 +35,7 @@ public class WrittingAdapter extends RecyclerView.Adapter<WrittingAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(WrittingAdapter.MyViewholder holder, int position) {
+    public void onBindViewHolder(WritingAdapter.MyViewholder holder, int position) {
 
         ItemForm data = datalist.get(position);
         holder.personalId.setText(data.getId());
@@ -101,7 +101,7 @@ public class WrittingAdapter extends RecyclerView.Adapter<WrittingAdapter.MyView
 
     }
 
-    public WrittingAdapter(Activity activity, ArrayList<ItemForm> datalist){
+    public WritingAdapter(Activity activity, ArrayList<ItemForm> datalist){
         this.activity = activity;
         this.datalist = datalist;
 

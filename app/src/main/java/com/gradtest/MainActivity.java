@@ -7,13 +7,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView rcv;
     LinearLayoutManager llm;
-    WrittingAdapter wadapter;
+    WritingAdapter wadapter;
+    String date,id,title,item;
+    int switch_num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 btn_w.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                                 Intent it_w = new Intent(MainActivity.this, WritingActivity.class);
+                                it_w.putExtra("switch_num",switch_num);
                                 startActivity(it_w);
                             }
         });
@@ -45,14 +49,30 @@ public class MainActivity extends AppCompatActivity {
         list.add(new ItemForm("seolwon5",R.drawable.jjang3,"안녕서런아"));
         list.add(new ItemForm("seolwon6",R.drawable.jjang4,"안녕하쇼"));
 
-        wadapter = new WrittingAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
-        rcv.setAdapter(wadapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
+        if(switch_num==1) {
+            Toast toast_w = Toast.makeText(this,"글 작성 완료!",Toast.LENGTH_LONG);
+            toast_w.show();
+            list.add(new ItemForm(id, R.drawable.logo_image, title));
+            switch_num = 0;
+            wadapter = new WritingAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
+            rcv.setAdapter(wadapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
+        }
+
+        else {
+            wadapter = new WritingAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
+            rcv.setAdapter(wadapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
+        }
 
 
+    }
 
-
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_OK){
+            switch(requestCode){
+                case WritingActivity:
+                    list.clear();
+            }
+        }
     }
 }
