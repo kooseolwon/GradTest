@@ -21,9 +21,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginbtn.setOnClickListener(this);
 
         Button signupbtn = (Button)findViewById(R.id.signup_btn);
-               signupbtn.setOnClickListener(this);
-                Button findpwbtn = (Button)findViewById(R.id.find_pw_btn);
-                findpwbtn.setOnClickListener(this);
+       signupbtn.setOnClickListener(this);
+        Button findpwbtn = (Button)findViewById(R.id.find_pw_btn);
+        findpwbtn.setOnClickListener(this);
+        Button findidbtn = (Button)findViewById(R.id.find_id_btn);
+        findidbtn.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +44,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Intent intent4 = new Intent(LoginActivity.this, Pw1Activity.class);
                                 startActivity(intent4);
                                 break;
+            case R.id.find_id_btn:
+                Intent intent3 = new Intent(this, FindIdActivity.class);
+                startActivity(intent3);
+                break;
         }
     }
 }

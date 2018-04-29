@@ -1,17 +1,29 @@
 package com.gradtest;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +42,17 @@ public class WritingActivity extends AppCompatActivity {
     DBHelper dbHelper;
     TextView title;
     TextView item;
+    TextView where_text;
     Date date;
     int switch_num;
+    int w_p1;
+    int[] sp1;
+    RadioButton btn_where1, btn_where2;
+    RadioButton where1_1, where1_2;
+    Spinner spinner1,spinner2_0,spinner2_1,spinner2_2;
+    String where,where2_0, where2_1, where2_2;
+    ArrayAdapter<CharSequence> array,array2_0,array2_1,array2_2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +99,126 @@ public class WritingActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
         //메인화면 레이아웃에 날짜 추가해서 포맷  붙여야함
 
+        spinner1 = (Spinner)findViewById(R.id.spinner1);
+        spinner2_0 = (Spinner)findViewById(R.id.spinner2_0);
+        spinner2_1 = (Spinner)findViewById(R.id.spinner2_1);
+        spinner2_2 = (Spinner)findViewById(R.id.spinner2_2);
+
+        array = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array,android.R.layout.simple_spinner_item);
+        array2_0 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2_0,android.R.layout.simple_spinner_item);
+        array2_1 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2_1,android.R.layout.simple_spinner_item);
+        array2_2 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2_2,android.R.layout.simple_spinner_item);
+
+
+        spinner1.setAdapter(array);spinner2_0.setAdapter(array2_0);spinner2_1.setAdapter(array2_1);spinner2_2.setAdapter(array2_2);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                w_p1 = position;
+                Toast.makeText(getApplicationContext(), Integer.toString(w_p1), Toast.LENGTH_SHORT).show();
+
+
+                switch(position) {
+                    case 1:
+                        where_text.setText("지역설정 > 서울특별시 > ");
+                        spinner2_0.setVisibility(View.VISIBLE);
+                        spinner2_1.setVisibility(View.GONE);
+                        spinner2_2.setVisibility(View.GONE);
+                }
+                switch(position) {
+                    case 2:
+                        where_text.setText("지역설정 > 부산광역시 > ");
+                        spinner2_0.setVisibility(View.GONE);
+                        spinner2_1.setVisibility(View.VISIBLE);
+                        spinner2_2.setVisibility(View.GONE);
+                }
+                switch(position) {
+                    case 3:
+                        where_text.setText("지역설정 > 인천광역시 >");
+                        spinner2_0.setVisibility(View.GONE);
+                        spinner2_1.setVisibility(View.GONE);
+                        spinner2_2.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner2_0.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView tv = (TextView)view;
+                where2_0 = String.valueOf(tv.getText());
+                where_text.setText("지역설정 > 서울특별시 > " +where2_0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner2_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView tv = (TextView)view;
+                where2_1 = String.valueOf(tv.getText());
+                where_text.setText("지역설정 > 부산광역시 > " +where2_1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner2_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView tv = (TextView)view;
+                where2_2 = String.valueOf(tv.getText());
+                where_text.setText("지역설정 > 인천광역시 > " +where2_2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        where_text = (TextView)findViewById(R.id.where_text);
+        btn_where1 = (RadioButton)findViewById(R.id.btn_where);
+        btn_where1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                spinner1.setVisibility(View.VISIBLE);
+                where_text.setText("지역설정 > ");
+
+            }
+        });
+
+
+        btn_where2 = (RadioButton)findViewById(R.id.btn_where2);
+        btn_where2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner1.setVisibility(View.GONE);
+                where_text.setText("지역설정 > 안함");
+            }
+        });
+
 
     }
 
-   /* public byte[] getByteArrayFromDrawable(Drawable d){
-        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
-        byte[] data = stream.toByteArray();
 
-        return data;*/
+
+
+
 
 
     @Override
