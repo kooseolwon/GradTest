@@ -43,6 +43,7 @@ public class WritingActivity extends AppCompatActivity {
     TextView title;
     TextView item;
     TextView where_text;
+    TextView pin_text;
     Date date;
     int switch_num;
     int w_p1;
@@ -82,11 +83,14 @@ public class WritingActivity extends AppCompatActivity {
         ImageButton pin_btn = (ImageButton)findViewById(R.id.pin);
         pin_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(),"위치띄우기",Toast.LENGTH_LONG).show();
+                Intent intent_pin = new Intent(WritingActivity.this, MapActivity.class);
+                startActivity(intent_pin);
+
             }
         });
 
 
+        pin_text=(TextView)findViewById(R.id.pin_txt);
 
 
         dbHelper = new DBHelper(getApplicationContext(), "Board.db",null,1);

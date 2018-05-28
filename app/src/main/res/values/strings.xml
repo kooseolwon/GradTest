@@ -77,4 +77,8 @@
 
     </string-array>
 
+    <string name="skip_string">...</string>
+    <string name="no_image_ready">이미지를 준비중입니다.</string>
+    <string name="no_image_selected">이미지를 선택해주세요.</string>
+    <string name="title_image_register">이미지 등록</string>
 </resources>
