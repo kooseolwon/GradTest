@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.Activity;
 
 /**
  * Created by sm-pc on 2018-04-15.
@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.gradtest.R;
 
 /**
  * Created by sm-pc on 2018-04-11.

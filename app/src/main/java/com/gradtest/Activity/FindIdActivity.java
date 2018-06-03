@@ -1,8 +1,10 @@
-package com.gradtest;
+package com.gradtest.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.gradtest.R;
 
 /**
  * Created by SM-PC on 2018-04-08.

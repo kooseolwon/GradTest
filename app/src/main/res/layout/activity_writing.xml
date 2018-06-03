@@ -73,28 +73,14 @@
                     android:visibility="gone"></Spinner>
 
                 <Spinner
-                    android:id="@+id/spinner2_0"
+                    android:id="@+id/spinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
                 </Spinner>
 
-                <Spinner
-                    android:id="@+id/spinner2_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone">
 
-                </Spinner>
-
-                <Spinner
-                    android:id="@+id/spinner2_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone">
-
-                </Spinner>
 
             </LinearLayout>
 

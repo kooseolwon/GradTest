@@ -1,36 +1,36 @@
-package com.gradtest;
+package com.gradtest.Activity;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ClipData;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import com.gradtest.Board;
+import com.gradtest.MyLog;
+import com.gradtest.Net;
+import com.gradtest.R;
+import com.gradtest.Req.Req_write;
+import com.gradtest.Res.Res_write;
+
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -39,9 +39,6 @@ import java.text.SimpleDateFormat;
 
 public class WritingActivity extends AppCompatActivity {
 
-    DBHelper dbHelper;
-    TextView title;
-    TextView item;
     TextView where_text;
     TextView pin_text;
     Date date;
@@ -50,10 +47,16 @@ public class WritingActivity extends AppCompatActivity {
     int[] sp1;
     RadioButton btn_where1, btn_where2;
     RadioButton where1_1, where1_2;
-    Spinner spinner1,spinner2_0,spinner2_1,spinner2_2;
+    Spinner spinner1,spinner2;
     String where,where2_0, where2_1, where2_2;
-    ArrayAdapter<CharSequence> array,array2_0,array2_1,array2_2;
+    ArrayAdapter<CharSequence> array,array2;
+    EditText title,content;
 
+    String board_title, board_content;
+    File board_photo;
+    int user_index, board_category;
+
+    Call<Res_write> res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,8 @@ public class WritingActivity extends AppCompatActivity {
         ImageButton cam_btn = (ImageButton)findViewById(R.id.cam);
         cam_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(),"앨범",Toast.LENGTH_LONG).show();
+                Intent intent_photo = new Intent(WritingActivity.this, PhotoActivity.class);
+                startActivity(intent_photo);
             }
         });
 
@@ -93,10 +97,12 @@ public class WritingActivity extends AppCompatActivity {
         pin_text=(TextView)findViewById(R.id.pin_txt);
 
 
-        dbHelper = new DBHelper(getApplicationContext(), "Board.db",null,1);
 
-        title = (TextView)findViewById(R.id.editTitle);
-        item = (TextView)findViewById(R.id.editText);
+        title = (EditText) findViewById(R.id.editTitle);
+        board_title = title.getText().toString();
+        content = (EditText) findViewById(R.id.editText);
+        board_content = content.getText().toString();
+
 
         Long now = System.currentTimeMillis();
         date = new Date(now);
@@ -104,17 +110,14 @@ public class WritingActivity extends AppCompatActivity {
         //메인화면 레이아웃에 날짜 추가해서 포맷  붙여야함
 
         spinner1 = (Spinner)findViewById(R.id.spinner1);
-        spinner2_0 = (Spinner)findViewById(R.id.spinner2_0);
-        spinner2_1 = (Spinner)findViewById(R.id.spinner2_1);
-        spinner2_2 = (Spinner)findViewById(R.id.spinner2_2);
+        spinner2 = (Spinner)findViewById(R.id.spinner2);
+
 
         array = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array,android.R.layout.simple_spinner_item);
-        array2_0 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2_0,android.R.layout.simple_spinner_item);
-        array2_1 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2_1,android.R.layout.simple_spinner_item);
-        array2_2 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2_2,android.R.layout.simple_spinner_item);
+        array2 = ArrayAdapter.createFromResource(WritingActivity.this,R.array.array2,android.R.layout.simple_spinner_item);
 
 
-        spinner1.setAdapter(array);spinner2_0.setAdapter(array2_0);spinner2_1.setAdapter(array2_1);spinner2_2.setAdapter(array2_2);
+        spinner1.setAdapter(array);spinner2.setAdapter(array2);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -125,23 +128,8 @@ public class WritingActivity extends AppCompatActivity {
                 switch(position) {
                     case 1:
                         where_text.setText("지역설정 > 서울특별시 > ");
-                        spinner2_0.setVisibility(View.VISIBLE);
-                        spinner2_1.setVisibility(View.GONE);
-                        spinner2_2.setVisibility(View.GONE);
-                }
-                switch(position) {
-                    case 2:
-                        where_text.setText("지역설정 > 부산광역시 > ");
-                        spinner2_0.setVisibility(View.GONE);
-                        spinner2_1.setVisibility(View.VISIBLE);
-                        spinner2_2.setVisibility(View.GONE);
-                }
-                switch(position) {
-                    case 3:
-                        where_text.setText("지역설정 > 인천광역시 >");
-                        spinner2_0.setVisibility(View.GONE);
-                        spinner2_1.setVisibility(View.GONE);
-                        spinner2_2.setVisibility(View.VISIBLE);
+                        spinner2.setVisibility(View.VISIBLE);
+
                 }
 
             }
@@ -152,12 +140,14 @@ public class WritingActivity extends AppCompatActivity {
             }
         });
 
-        spinner2_0.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv = (TextView)view;
                 where2_0 = String.valueOf(tv.getText());
                 where_text.setText("지역설정 > 서울특별시 > " +where2_0);
+
+                board_category = position+1;
             }
 
             @Override
@@ -166,33 +156,7 @@ public class WritingActivity extends AppCompatActivity {
             }
         });
 
-        spinner2_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView tv = (TextView)view;
-                where2_1 = String.valueOf(tv.getText());
-                where_text.setText("지역설정 > 부산광역시 > " +where2_1);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinner2_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView tv = (TextView)view;
-                where2_2 = String.valueOf(tv.getText());
-                where_text.setText("지역설정 > 인천광역시 > " +where2_2);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         where_text = (TextView)findViewById(R.id.where_text);
         btn_where1 = (RadioButton)findViewById(R.id.btn_where);
@@ -213,16 +177,12 @@ public class WritingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinner1.setVisibility(View.GONE);
                 where_text.setText("지역설정 > 안함");
+                board_category =0;
             }
         });
 
 
     }
-
-
-
-
-
 
 
     @Override
@@ -242,25 +202,50 @@ public class WritingActivity extends AppCompatActivity {
                 startActivity(it);
                 return true;
             case R.id.write_fin :
-                //Toast toast_w = Toast.makeText(this,"글 작성 완료!",Toast.LENGTH_LONG);
-                //toast_w.show();
+                Toast toast_w = Toast.makeText(this,"글 작성 완료!",Toast.LENGTH_LONG);
+                toast_w.show();
 
-                String str_date = "2018.4.15";
-                String str_id = "b89786";
-                String str_title = title.getText().toString();
-                String str_item =  item.getText().toString();
+                Board board = new Board();
+                board.setBoard_title(board_title);
+                board.setBoard_content(board_content);
+                board.setBoard_category(board_category);
+                //파일올리는건 아직..
+                Req_write req_write = new Req_write();
+                req_write.setUser(new Board(board_title,board_content,board_category));
+                res= Net.getInstance().getNetworkService().board_write(req_write);
+                res.enqueue(new Callback<Res_write>() {
+                    @Override
+                    public void onResponse(Call<Res_write> call, Response<Res_write> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                Res_write boards = response.body();
 
+                                MyLog.d("Write", "글쓰기 성공!");
+                                Toast.makeText(WritingActivity.this, "글 작성 완료!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(WritingActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                MyLog.d("Write 통신", "실패 1 response 내용이 없음");
+                            }
+                        } else {
+                            try {
+                                MyLog.d("Write 통신", "실패 2 서버 에러" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
 
-                //아이디,프사
-                switch_num = 1;
+                    @Override
+                    public void onFailure(Call<Res_write> call, Throwable t) {
+                        MyLog.d("Login 통신", "실패 3 통신 에러" + t.getLocalizedMessage());
+
+                    }
+                });
 
 
                 Intent it2 = new Intent(WritingActivity.this,MainActivity.class);
-                it2.putExtra("date",str_date);
-                it2.putExtra("id",str_id);
-                it2.putExtra("title",str_title);
-                it2.putExtra("item",str_item);
-                it2.putExtra("switch_num",switch_num);
+
 
                 finish();
                 startActivity(it2);

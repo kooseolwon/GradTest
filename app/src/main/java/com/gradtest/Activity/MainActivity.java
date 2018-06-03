@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.gradtest.ItemForm;
+import com.gradtest.R;
+import com.gradtest.WritingAdapter;
 
 import java.util.ArrayList;
 

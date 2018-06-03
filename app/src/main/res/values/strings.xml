@@ -4,14 +4,11 @@
 
 
     <string-array name="array">
-        <item>--시·도--</item>
         <item>서울특별시</item>
-        <item>부산광역시</item>
-        <item>인천광역시</item>
     </string-array>
 
 
-    <string-array name="array2_0">
+    <string-array name="array2">
         <item>서울 전체</item>
         <item>종로구</item>
         <item>중구</item>
@@ -41,41 +38,7 @@
     </string-array>
 
 
-    <string-array name="array2_1">
-        <item>부산 전체</item>
-        <item>중구</item>
-        <item>서구</item>
-        <item>동구</item>
-        <item>영도구</item>
-        <item>부산진구</item>
-        <item>동래구</item>
-        <item>남구</item>
-        <item>북구</item>
-        <item>해운대구</item>
-        <item>사하구</item>
-        <item>금정구</item>
-        <item>강서구</item>
-        <item>연제구</item>
-        <item>수영구</item>
-        <item>사상구</item>
-        <item>기장군</item>
-    </string-array>
 
-
-    <string-array name="array2_2">
-        <item>인천 전체</item>
-        <item>중구</item>
-        <item>동구</item>
-        <item>남구</item>
-        <item>연수구</item>
-        <item>남동구</item>
-        <item>부평구</item>
-        <item>계양구</item>
-        <item>서구</item>
-        <item>강화군</item>
-        <item>옹진군</item>
-
-    </string-array>
 
     <string name="skip_string">...</string>
     <string name="no_image_ready">이미지를 준비중입니다.</string>
