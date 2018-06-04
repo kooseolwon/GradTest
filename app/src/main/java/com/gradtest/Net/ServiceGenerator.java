@@ -1,9 +1,10 @@
-package com.gradtest;
+package com.gradtest.Net;
 
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import com.gradtest.BuildConfig;
+import com.gradtest.Net.RemoteService;
 
 
 import okhttp3.OkHttpClient;

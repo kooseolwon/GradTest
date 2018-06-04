@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.Lib;
 
 import android.graphics.Bitmap;
 import android.os.Handler;

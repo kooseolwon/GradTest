@@ -1,6 +1,8 @@
-package com.gradtest;
+package com.gradtest.Lib;
 
 import android.content.Context;
+
+import com.gradtest.R;
 
 /**
  * Created by sm-pc on 2018-05-29.

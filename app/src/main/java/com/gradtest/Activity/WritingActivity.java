@@ -16,17 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.annotations.SerializedName;
-import com.gradtest.Board;
-import com.gradtest.MyLog;
-import com.gradtest.Net;
+import com.gradtest.DataType.Board;
+import com.gradtest.ETC.MyLog;
+import com.gradtest.Net.Net;
 import com.gradtest.R;
-import com.gradtest.User_login;
-
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -56,7 +51,7 @@ public class WritingActivity extends AppCompatActivity {
 
     String board_title, board_content;
     File board_photo;
-    int board_category;
+    int board_category = 0;
 
     Call<Board> res;
 
@@ -256,6 +251,9 @@ public class WritingActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         }else{
+                            String a = toString().valueOf(board_category);
+                            Toast.makeText(WritingActivity.this,a , Toast.LENGTH_SHORT).show();
+
                             MyLog.d("Join 통신", "실패 1 response 내용이 없음"+response.code());
                         }
                     }

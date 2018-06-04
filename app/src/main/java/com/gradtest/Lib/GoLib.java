@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.Lib;
 
 import android.content.Context;
 import android.content.Intent;

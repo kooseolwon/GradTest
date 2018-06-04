@@ -4,24 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.gradtest.MyLog;
-import com.gradtest.Net;
+import com.gradtest.ETC.MyLog;
+import com.gradtest.Net.Net;
 import com.gradtest.R;
-import com.gradtest.User_login;
+import com.gradtest.DataType.User_login;
 
-import org.json.JSONArray;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,10 +101,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    @Override
                    public void onResponse(Call<User_login> call, Response<User_login> response) {
                        if (response.isSuccessful()) {
+                           Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
 
-                           User_login ul = response.body();
-
-                          Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                            startActivity(intent);
 
                        }else{

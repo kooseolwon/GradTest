@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.ETC;
 
 /**
  * Created by SM-PC on 2018-04-13.

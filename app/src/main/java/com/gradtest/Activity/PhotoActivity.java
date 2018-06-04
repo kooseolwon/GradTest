@@ -22,15 +22,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
-import com.gradtest.BitmapLib;
-import com.gradtest.FileLib;
-import com.gradtest.GoLib;
-import com.gradtest.ImageItem;
-import com.gradtest.MyLog;
-import com.gradtest.MyToast;
+import com.gradtest.Lib.BitmapLib;
+import com.gradtest.Lib.FileLib;
+import com.gradtest.Lib.GoLib;
+import com.gradtest.ETC.ImageItem;
+import com.gradtest.ETC.MyLog;
+import com.gradtest.ETC.MyToast;
 import com.gradtest.R;
-import com.gradtest.RemoteLib;
-import com.gradtest.RemoteService;
+import com.gradtest.Lib.RemoteLib;
+import com.gradtest.Net.RemoteService;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 

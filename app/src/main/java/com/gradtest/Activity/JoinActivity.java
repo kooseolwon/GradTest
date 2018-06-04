@@ -9,12 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.gradtest.MyLog;
-import com.gradtest.Net;
+import com.gradtest.ETC.MyLog;
+import com.gradtest.Net.Net;
 import com.gradtest.R;
-import com.gradtest.User;
-
-import java.io.IOException;
+import com.gradtest.DataType.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,9 +1,13 @@
-package com.gradtest;
+package com.gradtest.Lib;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+
+import com.gradtest.ETC.MyLog;
+import com.gradtest.Net.RemoteService;
+import com.gradtest.Net.ServiceGenerator;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

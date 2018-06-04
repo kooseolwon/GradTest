@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.ETC;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gradtest.Activity.ArticleActivity;
+import com.gradtest.ETC.ItemForm;
+import com.gradtest.R;
 
 import java.util.ArrayList;
 

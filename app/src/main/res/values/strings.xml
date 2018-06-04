@@ -4,6 +4,7 @@
 
 
     <string-array name="array">
+        <item>지역 설정</item>
         <item>서울특별시</item>
     </string-array>
 

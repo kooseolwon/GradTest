@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.DataType;
 
 /**
  * Created by sm-pc on 2018-05-31.

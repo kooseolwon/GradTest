@@ -1,6 +1,8 @@
-package com.gradtest;
+package com.gradtest.ETC;
 
 import android.util.Log;
+
+import com.gradtest.BuildConfig;
 
 /**
  * Created by sm-pc on 2018-05-28.

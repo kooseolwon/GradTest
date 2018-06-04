@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.ETC;
 
 import android.content.Context;
 import android.widget.Toast;

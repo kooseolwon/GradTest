@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.gradtest.ItemForm;
+import com.gradtest.ETC.ItemForm;
 import com.gradtest.R;
-import com.gradtest.WritingAdapter;
+import com.gradtest.Adapter.WritingAdapter;
 
 import java.util.ArrayList;
 

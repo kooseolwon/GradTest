@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.DataType;
 
 import java.io.File;
 

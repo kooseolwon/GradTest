@@ -1,4 +1,4 @@
-package com.gradtest;
+package com.gradtest.Net;
 
 import android.app.Application;
 

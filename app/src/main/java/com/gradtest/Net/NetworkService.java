@@ -1,10 +1,12 @@
-package com.gradtest;
+package com.gradtest.Net;
+
+import com.gradtest.DataType.Board;
+import com.gradtest.DataType.User;
+import com.gradtest.DataType.User_login;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Created by sm-pc on 2018-05-30.
