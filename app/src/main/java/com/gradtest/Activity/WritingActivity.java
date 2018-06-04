@@ -118,8 +118,6 @@ public class WritingActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 w_p1 = position;
-                Toast.makeText(getApplicationContext(), Integer.toString(w_p1), Toast.LENGTH_SHORT).show();
-
 
                 switch(position) {
                     case 1:
@@ -251,8 +249,6 @@ public class WritingActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         }else{
-                            String a = toString().valueOf(board_category);
-                            Toast.makeText(WritingActivity.this,a , Toast.LENGTH_SHORT).show();
 
                             MyLog.d("Join 통신", "실패 1 response 내용이 없음"+response.code());
                         }
