@@ -4,20 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.gradtest.MyLog;
 import com.gradtest.Net;
 import com.gradtest.R;
-import com.gradtest.Req.Req_login;
-import com.gradtest.Res.Res_login;
 import com.gradtest.User_login;
+
+import org.json.JSONArray;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText et_id, et_pw;
     String id, pw;
-    Call<Res_login> res;
+    int user_index;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,10 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         et_id = (EditText)findViewById(R.id.et_loginid);
-        String id = et_id.getText().toString();
         et_pw = (EditText)findViewById(R.id.et_passwordtxt);
-        String pw = et_pw.getText().toString();
-
 
         Button loginbtn = (Button)findViewById(R.id.login_btn);
         loginbtn.setOnClickListener(this);
@@ -59,13 +60,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_btn:
-                User_login user_login = new User_login();
+                String id = et_id.getText().toString();
+                String pw = et_pw.getText().toString();
+
+                final User_login user_login = new User_login();
                 user_login.setUser_id(id);
                 user_login.setUser_pw(pw);
-                Req_login req_login = new Req_login();
-                req_login.setUser(new User_login(id,pw));
-                res= Net.getInstance().getNetworkService().signin(req_login);
-                res.enqueue(new Callback<Res_login>(){
+
+                Call<User_login> res = Net.getInstance().getNetworkService().post_login(user_login);
+
+                    /*
                     @Override
                     public void onResponse(Call<Res_login> call, Response<Res_login> response) {
 
@@ -99,8 +103,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         MyLog.d("Login 통신", "실패 3 통신 에러" +t.getLocalizedMessage() );
                         Toast.makeText(LoginActivity.this, "통신에러", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
 
+               res.enqueue(new Callback<User_login>() {
+                   @Override
+                   public void onResponse(Call<User_login> call, Response<User_login> response) {
+                       if (response.isSuccessful()) {
+
+                           Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                           startActivity(intent);
+
+                       }else{
+                           MyLog.d("Login 통신", "실패 1 response 내용이 없음");
+                           Toast.makeText(LoginActivity.this, "가입 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                       }
+                   }
+
+                   @Override
+                   public void onFailure(Call<User_login> call, Throwable t) {
+                       MyLog.d("Login 통신", "실패 3 통신 에러" +t.getLocalizedMessage());
+                   }
+               });
                 break;
 
 

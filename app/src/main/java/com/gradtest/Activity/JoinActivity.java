@@ -12,8 +12,6 @@ import android.widget.Toast;
 import com.gradtest.MyLog;
 import com.gradtest.Net;
 import com.gradtest.R;
-import com.gradtest.Req.Req_join;
-import com.gradtest.Res.Res_join;
 import com.gradtest.User;
 
 import java.io.IOException;
@@ -29,7 +27,6 @@ import retrofit2.Response;
 public class JoinActivity extends AppCompatActivity {
 
     EditText et_name,et_id,et_pw;
-    Call<Res_join> res;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,8 +36,6 @@ public class JoinActivity extends AppCompatActivity {
         et_name = (EditText)findViewById(R.id.signup_name);
         et_id = (EditText)findViewById(R.id.signup_id);
         et_pw = (EditText)findViewById(R.id.signup_pw);
-
-
 
 
         Button join = (Button)findViewById(R.id.join_btn);

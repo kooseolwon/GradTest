@@ -16,12 +16,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
 import com.gradtest.Board;
 import com.gradtest.MyLog;
 import com.gradtest.Net;
 import com.gradtest.R;
-import com.gradtest.Req.Req_write;
-import com.gradtest.Res.Res_write;
+import com.gradtest.User_login;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,9 +56,9 @@ public class WritingActivity extends AppCompatActivity {
 
     String board_title, board_content;
     File board_photo;
-    int user_index, board_category;
+    int board_category;
 
-    Call<Res_write> res;
+    Call<Board> res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +101,8 @@ public class WritingActivity extends AppCompatActivity {
 
 
         title = (EditText) findViewById(R.id.editTitle);
-        board_title = title.getText().toString();
         content = (EditText) findViewById(R.id.editText);
-        board_content = content.getText().toString();
+
 
 
         Long now = System.currentTimeMillis();
@@ -202,17 +203,18 @@ public class WritingActivity extends AppCompatActivity {
                 startActivity(it);
                 return true;
             case R.id.write_fin :
-                Toast toast_w = Toast.makeText(this,"글 작성 완료!",Toast.LENGTH_LONG);
-                toast_w.show();
+
+
+                board_title = title.getText().toString();
+                board_content = content.getText().toString();
 
                 Board board = new Board();
                 board.setBoard_title(board_title);
                 board.setBoard_content(board_content);
                 board.setBoard_category(board_category);
-                //파일올리는건 아직..
-                Req_write req_write = new Req_write();
-                req_write.setUser(new Board(board_title,board_content,board_category));
-                res= Net.getInstance().getNetworkService().board_write(req_write);
+
+
+               /*
                 res.enqueue(new Callback<Res_write>() {
                     @Override
                     public void onResponse(Call<Res_write> call, Response<Res_write> response) {
@@ -242,13 +244,28 @@ public class WritingActivity extends AppCompatActivity {
 
                     }
                 });
+*/
+                res = Net.getInstance().getNetworkService().post_board(board);
+                res.enqueue(new Callback<Board>() {
+                    @Override
+                    public void onResponse(Call<Board> call, Response<Board> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(WritingActivity.this, "글쓰기 완료!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(WritingActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+                        }else{
+                            MyLog.d("Join 통신", "실패 1 response 내용이 없음");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Board> call, Throwable t) {
+                        MyLog.d("Join 통신", "실패 3 통신 에러" +t.getLocalizedMessage());
+                    }
+                });
 
 
-                Intent it2 = new Intent(WritingActivity.this,MainActivity.class);
-
-
-                finish();
-                startActivity(it2);
 
 
                 return true;
