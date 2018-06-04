@@ -110,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    public void onResponse(Call<User_login> call, Response<User_login> response) {
                        if (response.isSuccessful()) {
 
+
                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                            startActivity(intent);
