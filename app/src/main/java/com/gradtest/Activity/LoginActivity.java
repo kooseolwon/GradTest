@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_btn:
-                String id = et_id.getText().toString();
-                String pw = et_pw.getText().toString();
+                id = et_id.getText().toString();
+                pw = et_pw.getText().toString();
 
                 final User_login user_login = new User_login();
                 user_login.setUser_id(id);
@@ -110,9 +110,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    public void onResponse(Call<User_login> call, Response<User_login> response) {
                        if (response.isSuccessful()) {
 
+                           User_login ul = response.body();
 
-                           Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
-                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                          Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                            startActivity(intent);
 
                        }else{

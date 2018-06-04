@@ -204,6 +204,7 @@ public class WritingActivity extends AppCompatActivity {
                 return true;
             case R.id.write_fin :
 
+                int index_temp=7;
 
                 board_title = title.getText().toString();
                 board_content = content.getText().toString();
@@ -212,7 +213,7 @@ public class WritingActivity extends AppCompatActivity {
                 board.setBoard_title(board_title);
                 board.setBoard_content(board_content);
                 board.setBoard_category(board_category);
-
+                board.setUser_index(index_temp);
 
                /*
                 res.enqueue(new Callback<Res_write>() {
@@ -255,7 +256,7 @@ public class WritingActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         }else{
-                            MyLog.d("Join 통신", "실패 1 response 내용이 없음");
+                            MyLog.d("Join 통신", "실패 1 response 내용이 없음"+response.code());
                         }
                     }
 
