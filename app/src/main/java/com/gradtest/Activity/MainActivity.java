@@ -5,15 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.gradtest.DataType.Board;
 import com.gradtest.ETC.ItemForm;
+import com.gradtest.Net.Net;
 import com.gradtest.R;
 import com.gradtest.Adapter.WritingAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView rcv;
@@ -43,6 +51,34 @@ public class MainActivity extends AppCompatActivity {
         rcv.setLayoutManager(llm);
 
         ArrayList<ItemForm> list = new ArrayList<>();
+
+
+        Call<Board> res = Net.getInstance().getNetworkService().show_board();
+        res.enqueue(new Callback<Board>() {
+            @Override
+            public void onResponse(Call<Board> call, Response<Board> response) {
+                if(response.isSuccessful()){
+                    Board board = response.body();
+
+
+                } else{
+                int statusCode = response.code();
+                    Log.i("MyTag","응답코드 : "+statusCode);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Board> call, Throwable t) {
+                Log.i("MyTag", "서버 onFailure 에러내용 : " +t.getMessage());
+
+            }
+        });
+
+
+
+
+
+
 
         list.add(new ItemForm("seolwon",R.drawable.jjang1,"안녕!"));
         list.add(new ItemForm("seol",R.drawable.jjang2,"안녕하세요1"));

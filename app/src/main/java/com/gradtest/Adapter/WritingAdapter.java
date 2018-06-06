@@ -43,7 +43,7 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
 
         ItemForm data = datalist.get(position);
         holder.personalId.setText(data.getId());
-        holder.profile.setImageResource(data.getImageNumber());
+
         holder.writtingTxt.setText(data.getTxt());
 
 
@@ -53,7 +53,7 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
 
     public class MyViewholder extends RecyclerView.ViewHolder
     {
-        ImageView profile;
+
         TextView writtingTxt;
         TextView personalId;
         String wrTxt;
@@ -65,7 +65,7 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
 
 
 
-            profile = (ImageView) itemview.findViewById(R.id.image_jjang);
+            ;
             writtingTxt = (TextView) itemview.findViewById(R.id.person_id1);
             personalId = (TextView) itemview.findViewById(R.id.person_id);
 
@@ -87,7 +87,7 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
                     Intent intent = new Intent(v.getContext(), ArticleActivity.class);
                     intent.putExtra("story",datalist.get(getAdapterPosition()).getTxt());
                     intent.putExtra("ID",datalist.get(getAdapterPosition()).getId());
-                    intent.putExtra("img",datalist.get(getAdapterPosition()).getImageNumber());
+                  ///  intent.putExtra("img",datalist.get(getAdapterPosition()).getImageNumber());
 
 
                     v.getContext().startActivity(intent);

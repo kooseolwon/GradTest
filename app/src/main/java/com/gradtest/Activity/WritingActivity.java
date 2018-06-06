@@ -52,6 +52,7 @@ public class WritingActivity extends AppCompatActivity {
     String board_title, board_content;
     File board_photo;
     int board_category = 0;
+    String pin;
 
     Call<Board> res;
 
@@ -59,6 +60,10 @@ public class WritingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
+
+        Intent pinsave = new Intent(this.getIntent());
+
+        pin = getIntent().getStringExtra("pin");
 
         ActionBar ab = getSupportActionBar();
         ab.setIcon(R.mipmap.logo);
@@ -92,6 +97,12 @@ public class WritingActivity extends AppCompatActivity {
 
 
         pin_text=(TextView)findViewById(R.id.pin_txt);
+        if(pin==null) {
+            pin_text.setText("[위치] : 위치 정보 없음");
+        }else{
+            pin_text.setText("[위치] : " + pin);
+        }
+
 
 
 

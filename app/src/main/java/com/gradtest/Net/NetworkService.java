@@ -4,8 +4,11 @@ import com.gradtest.DataType.Board;
 import com.gradtest.DataType.User;
 import com.gradtest.DataType.User_login;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -37,5 +40,9 @@ public interface NetworkService {
     /*
     @POST("board/write")
     Call<Res_write> board_write(@Body Req_write board);*/
+
+    //게시물보기
+    @GET("board/show")
+    Call<Board> show_board();
 
 }

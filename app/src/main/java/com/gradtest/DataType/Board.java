@@ -18,6 +18,8 @@ public class Board {
         this.user_index=user_index;
     }
 
+
+
     public String getBoard_title() {
         return board_title;
     }

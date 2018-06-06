@@ -2,41 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:id="@+id/image_jjang"
-        android:background="@drawable/jjang1"
-        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ID :"
-        android:layout_toRightOf="@+id/image_jjang"
-        android:layout_alignTop="@+id/image_jjang"
         android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/person_id2"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sin JJang koo"
         android:id="@+id/person_id"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/person_id2"
-        android:layout_alignTop="@+id/image_jjang"
-        />
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/person_id2"></TextView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="it is very funny!"
-        android:layout_below="@+id/image_jjang"
+        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
+        android:layout_toEndOf="@id/person_id2"
+        android:layout_marginLeft="10dp"
+        android:textSize="17sp"
         android:id="@+id/person_id1"
+        android:layout_marginBottom="20dp"
         />
 
 

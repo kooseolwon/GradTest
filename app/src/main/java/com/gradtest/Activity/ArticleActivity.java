@@ -23,14 +23,18 @@ public class ArticleActivity extends AppCompatActivity {
         Intent intent = getIntent();
         TextView Story = (TextView)findViewById(R.id.story_txt);
         TextView Id = (TextView)findViewById(R.id.personal_NM1);
-        ImageView Img = (ImageView)findViewById(R.id.personal_img);
+
+
+
+
+
         String a = intent.getStringExtra("story");
         String b = intent.getStringExtra("ID");
-        int c = intent.getIntExtra("img",0);
+        //int c = intent.getIntExtra("img",0);
 
         Story.setText(a);
         Id.setText(b);
-        Img.setImageResource(c);
+        //Img.setImageResource(c);
 
 
     }

@@ -14,6 +14,14 @@
         android:layout_height="808dp"
         tools:context="com.gradtest.Activity.MapActivity" />
 
+    <TextView
+        android:id="@+id/textView_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textAlignment="center"
+        android:text="ㅎ" />
+
     <Button
         android:id="@+id/addset_btn"
         android:layout_width="match_parent"

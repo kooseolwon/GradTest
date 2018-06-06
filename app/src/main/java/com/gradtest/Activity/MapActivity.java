@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -70,6 +71,7 @@ public class MapActivity extends AppCompatActivity
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
     String pin_text;
+    TextView pin_view;
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -87,13 +89,15 @@ public class MapActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_maps);
 
+
         addset_btn = (Button)findViewById(R.id.addset_btn);
         addset_btn.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v) {
-               Toast.makeText(getApplicationContext(),"위치저장완료",Toast.LENGTH_LONG).show();
+               Toast.makeText(getApplicationContext(),"위치저장완료"+pin_text,Toast.LENGTH_LONG).show();
                Intent intent_add = new Intent(MapActivity.this, WritingActivity.class);
-              startActivity(intent_add);
+               intent_add.putExtra("pin",pin_text);
+               startActivity(intent_add);
 
            }
        });
@@ -249,12 +253,16 @@ public class MapActivity extends AppCompatActivity
         Log.d(TAG, "onLocationChanged : ");
 
         String markerTitle = getCurrentAddress(currentPosition);
-        pin_text = markerTitle;
         String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                 + " 경도:" + String.valueOf(location.getLongitude());
 
         //현재 위치에 마커 생성하고 이동
         setCurrentLocation(location, markerTitle, markerSnippet);
+
+        pin_view = (TextView)findViewById(R.id.textView_pin);
+        pin_text = markerTitle;
+        pin_view.setText("현재 위치 : " + pin_text);
+
 
         mCurrentLocatiion = location;
     }
