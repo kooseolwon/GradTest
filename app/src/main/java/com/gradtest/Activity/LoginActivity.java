@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,49 +62,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 Call<User_login> res = Net.getInstance().getNetworkService().post_login(user_login);
 
-                    /*
-                    @Override
-                    public void onResponse(Call<Res_login> call, Response<Res_login> response) {
 
-                        if (response.isSuccessful()) {
-                            if(response.body()!=null){
-                                Res_login users = response.body();
-
-                                MyLog.d("Login", "로그인 성공!");
-                                Toast.makeText(LoginActivity.this, "로그인 완료!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-
-                            }else{
-                                MyLog.d("Login 통신", "실패 1 response 내용이 없음");
-                                Toast.makeText(LoginActivity.this, "내용x!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            }else{
-                            try{
-                                MyLog.d("Login 통신", "실패 2 서버 에러"+response.errorBody().string());
-                                Toast.makeText(LoginActivity.this, "서버에러", Toast.LENGTH_SHORT).show();
-                            }catch(IOException e){
-                                e.printStackTrace();
-                            }
-                        }
-                        }
-
-
-                    @Override
-                    public void onFailure(Call<Res_login> call, Throwable t) {
-                        MyLog.d("Login 통신", "실패 3 통신 에러" +t.getLocalizedMessage() );
-                        Toast.makeText(LoginActivity.this, "통신에러", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
 
                res.enqueue(new Callback<User_login>() {
                    @Override
                    public void onResponse(Call<User_login> call, Response<User_login> response) {
                        if (response.isSuccessful()) {
                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                           Log.v("seolwonk", String.valueOf(response.body().getUser_index()));
+
+                           int useridx = response.body().getUser_index();
+
+
 
                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                           intent.putExtra("uidx",useridx);
+
                            startActivity(intent);
 
                        }else{

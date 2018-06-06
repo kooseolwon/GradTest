@@ -53,7 +53,7 @@ public class WritingActivity extends AppCompatActivity {
     File board_photo;
     int board_category = 0;
     String pin;
-
+    int index_temp;
     Call<Board> res;
 
     @Override
@@ -62,6 +62,8 @@ public class WritingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_writing);
 
         Intent pinsave = new Intent(this.getIntent());
+         Intent intent1 = getIntent();
+         index_temp = intent1.getIntExtra("uidx",0);
 
         pin = getIntent().getStringExtra("pin");
 
@@ -208,48 +210,13 @@ public class WritingActivity extends AppCompatActivity {
                 return true;
             case R.id.write_fin :
 
-                int index_temp=7;
-
                 board_title = title.getText().toString();
                 board_content = content.getText().toString();
-
                 Board board = new Board();
                 board.setBoard_title(board_title);
                 board.setBoard_content(board_content);
                 board.setBoard_category(board_category);
                 board.setUser_index(index_temp);
-
-               /*
-                res.enqueue(new Callback<Res_write>() {
-                    @Override
-                    public void onResponse(Call<Res_write> call, Response<Res_write> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                Res_write boards = response.body();
-
-                                MyLog.d("Write", "글쓰기 성공!");
-                                Toast.makeText(WritingActivity.this, "글 작성 완료!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(WritingActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                MyLog.d("Write 통신", "실패 1 response 내용이 없음");
-                            }
-                        } else {
-                            try {
-                                MyLog.d("Write 통신", "실패 2 서버 에러" + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Res_write> call, Throwable t) {
-                        MyLog.d("Login 통신", "실패 3 통신 에러" + t.getLocalizedMessage());
-
-                    }
-                });
-*/
                 res = Net.getInstance().getNetworkService().post_board(board);
                 res.enqueue(new Callback<Board>() {
                     @Override
@@ -258,21 +225,16 @@ public class WritingActivity extends AppCompatActivity {
                             Toast.makeText(WritingActivity.this, "글쓰기 완료!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(WritingActivity.this, MainActivity.class);
                             startActivity(intent);
-
                         }else{
 
                             MyLog.d("Join 통신", "실패 1 response 내용이 없음"+response.code());
                         }
                     }
-
                     @Override
                     public void onFailure(Call<Board> call, Throwable t) {
                         MyLog.d("Join 통신", "실패 3 통신 에러" +t.getLocalizedMessage());
                     }
                 });
-
-
-
 
                 return true;
             default :

@@ -1,6 +1,6 @@
 package com.gradtest.DataType;
 
-import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by sm-pc on 2018-05-31.
@@ -55,6 +55,15 @@ public class Board {
 
     String board_title;
     String board_content;
+    ArrayList data;
+
+    public ArrayList getData() {
+        return data;
+    }
+
+    public void setData(ArrayList data) {
+        this.data = data;
+    }
 
     public String getBoard_photo() {
         return board_photo;

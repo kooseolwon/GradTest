@@ -1,8 +1,8 @@
 package com.gradtest.Activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.gradtest.Adapter.WritingAdapter;
 import com.gradtest.DataType.Board;
 import com.gradtest.ETC.ItemForm;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
-import com.gradtest.Adapter.WritingAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,12 +34,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         Button btn_w = (Button)findViewById(R.id.writing_btn);
                 btn_w.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                                Intent it_w = new Intent(MainActivity.this, WritingActivity.class);
-                                it_w.putExtra("switch_num",switch_num);
-                                startActivity(it_w);
+                Intent intent = getIntent();
+                int uidx = intent.getIntExtra("uidx",0);
+                Intent it_w = new Intent(MainActivity.this, WritingActivity.class);
+                it_w.putExtra("switch_num",switch_num);
+                it_w.putExtra("userindex",uidx);
+                startActivity(it_w);
                             }
         });
 
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Board> call, Response<Board> response) {
                 if(response.isSuccessful()){
                     Board board = response.body();
+                    ArrayList data =    response.body().getData();
+                    Log.v("seo",data.toString());
 
 
                 } else{
