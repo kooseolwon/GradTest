@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
                     Board board = response.body();
                     ArrayList data =    response.body().getData();
                     Log.v("seo",data.toString());
+                    for(int i =0; i<data.size();i++){
+                        Log.v("어랍쇼",data.get(i).toString());
+                    }
 
 
                 } else{
