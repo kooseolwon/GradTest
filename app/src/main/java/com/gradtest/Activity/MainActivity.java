@@ -16,6 +16,9 @@ import com.gradtest.ETC.ItemForm;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
 
+import org.json.JSONArray;
+
+import java.net.URL;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -27,25 +30,32 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager llm;
     WritingAdapter wadapter;
     String date,id,title,item;
+    String title_temp;
     int switch_num = 0;
+    int switchn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = super.getIntent();
+        switchn = intent.getIntExtra("switch",1);
+        title_temp = intent.getStringExtra("title");
+        final int uidx = intent.getIntExtra("uidx",0);
+        Log.d("타이틀",""+title_temp);
 
 
         Button btn_w = (Button)findViewById(R.id.writing_btn);
-                btn_w.setOnClickListener(new View.OnClickListener(){
+        btn_w.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Intent intent = getIntent();
-                int uidx = intent.getIntExtra("uidx",0);
+
                 Intent it_w = new Intent(MainActivity.this, WritingActivity.class);
                 it_w.putExtra("switch_num",switch_num);
                 it_w.putExtra("userindex",uidx);
                 startActivity(it_w);
-                            }
+
+            }
         });
 
 
@@ -64,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Board board = response.body();
                     ArrayList data =    response.body().getData();
-                    Log.v("seo",data.toString());
+                    //Log.v("seo",data.toString());
+
+                    String aa = data.get(0).toString();
 
 
                 } else{
-                int statusCode = response.code();
+                    int statusCode = response.code();
                     Log.i("MyTag","응답코드 : "+statusCode);
                 }
             }
@@ -79,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
 
 
@@ -109,8 +122,17 @@ public class MainActivity extends AppCompatActivity {
             rcv.setAdapter(wadapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
         }
 
+        if(switchn==1){
+            list.add(new ItemForm("example",R.drawable.logo_image, title_temp));
+            switchn=0;
+            wadapter = new WritingAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
+            rcv.setAdapter(wadapter);
+
+
+        }
 
     }
+
 
 
 }

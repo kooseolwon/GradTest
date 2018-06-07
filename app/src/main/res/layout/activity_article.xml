@@ -75,14 +75,6 @@
         android:layout_alignParentBottom="true"
         >
 
-        <Button
-            android:id="@+id/commentBtn"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="댓글 보기"
-            android:textSize="20pt"
-            android:textAlignment="center"/>
-
     </RelativeLayout>
 
 

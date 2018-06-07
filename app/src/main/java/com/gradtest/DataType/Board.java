@@ -76,4 +76,5 @@ public class Board {
     String board_photo;
     int user_index;
     int board_category;
+
 }

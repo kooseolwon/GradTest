@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,6 @@ public class WritingActivity extends AppCompatActivity {
     TextView where_text;
     TextView pin_text;
     Date date;
-    int switch_num;
     int w_p1;
     int[] sp1;
     RadioButton btn_where1, btn_where2;
@@ -61,11 +61,12 @@ public class WritingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
 
-        Intent pinsave = new Intent(this.getIntent());
-         Intent intent1 = getIntent();
-         index_temp = intent1.getIntExtra("uidx",0);
+        Intent intent = super.getIntent();
 
-        pin = getIntent().getStringExtra("pin");
+        index_temp = intent.getIntExtra("uidx", 0);
+        Log.d("아이디",""+index_temp);
+
+        pin = intent.getStringExtra("pin");
 
         ActionBar ab = getSupportActionBar();
         ab.setIcon(R.mipmap.logo);
@@ -212,11 +213,16 @@ public class WritingActivity extends AppCompatActivity {
 
                 board_title = title.getText().toString();
                 board_content = content.getText().toString();
+                index_temp=7;
                 Board board = new Board();
                 board.setBoard_title(board_title);
                 board.setBoard_content(board_content);
                 board.setBoard_category(board_category);
                 board.setUser_index(index_temp);
+
+                Log.d("카테고리","sdf"+board.getBoard_category());
+                Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
+
                 res = Net.getInstance().getNetworkService().post_board(board);
                 res.enqueue(new Callback<Board>() {
                     @Override
@@ -224,6 +230,8 @@ public class WritingActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(WritingActivity.this, "글쓰기 완료!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(WritingActivity.this, MainActivity.class);
+                            intent.putExtra("title",board_title);
+                            intent.putExtra("switch",1);
                             startActivity(intent);
                         }else{
 
