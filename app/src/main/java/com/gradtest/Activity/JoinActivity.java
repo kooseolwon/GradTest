@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.gradtest.ETC.MyLog;
@@ -25,6 +27,8 @@ import retrofit2.Response;
 public class JoinActivity extends AppCompatActivity {
 
     EditText et_name,et_id,et_pw;
+    Spinner star_area;
+    ArrayAdapter<CharSequence> array3;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,9 @@ public class JoinActivity extends AppCompatActivity {
         et_name = (EditText)findViewById(R.id.signup_name);
         et_id = (EditText)findViewById(R.id.signup_id);
         et_pw = (EditText)findViewById(R.id.signup_pw);
+        star_area = (Spinner)findViewById(R.id.star_area);
+        array3 = ArrayAdapter.createFromResource(JoinActivity.this,R.array.array3,android.R.layout.simple_spinner_item);
+        star_area.setAdapter(array3);
 
 
         Button join = (Button)findViewById(R.id.join_btn);

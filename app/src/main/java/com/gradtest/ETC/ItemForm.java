@@ -10,10 +10,21 @@ public class ItemForm {
     private int imageNumber;
     private String txt;
 
-    public ItemForm(String id1, int imageNumber1, String txt){//new생성자를 통해서 생성자가 만들어진다.
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    private String content;
+
+    public ItemForm(String id1, int imageNumber1, String txt, String content){//new생성자를 통해서 생성자가 만들어진다.
         this.id = id1;
        // this.imageNumber = imageNumber1;
         this.txt = txt;
+        this.content = content;
 
     }
     public String getId(){//외부로 id값을 리턴해서 내보내준다.
@@ -49,9 +60,11 @@ public class ItemForm {
     }
 
 
+    public int getImageNumber() {
+        return imageNumber;
+    }
 
-
-
-
-
+    public void setImageNumber(int imageNumber) {
+        this.imageNumber = imageNumber;
+    }
 }

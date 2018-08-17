@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.gradtest.R;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by SM-PC on 2018-04-08.
  */
@@ -23,6 +25,7 @@ public class ArticleActivity extends AppCompatActivity {
         Intent intent = getIntent();
         TextView Story = (TextView)findViewById(R.id.story_txt);
         TextView Id = (TextView)findViewById(R.id.personal_NM1);
+        TextView content = (TextView)findViewById(R.id.content_id);
 
 
 
@@ -30,10 +33,12 @@ public class ArticleActivity extends AppCompatActivity {
 
         String a = intent.getStringExtra("story");
         String b = intent.getStringExtra("ID");
+        String c = intent.getStringExtra("content");
         //int c = intent.getIntExtra("img",0);
 
         Story.setText(a);
         Id.setText(b);
+        content.setText(c);
         //Img.setImageResource(c);
 
 

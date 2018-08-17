@@ -87,6 +87,7 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
                     Intent intent = new Intent(v.getContext(), ArticleActivity.class);
                     intent.putExtra("story",datalist.get(getAdapterPosition()).getTxt());
                     intent.putExtra("ID",datalist.get(getAdapterPosition()).getId());
+                    intent.putExtra("content",datalist.get(getAdapterPosition()).getContent());
                   ///  intent.putExtra("img",datalist.get(getAdapterPosition()).getImageNumber());
 
 

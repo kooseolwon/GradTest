@@ -4,6 +4,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-feature android:name="android.hardware.Camera"></uses-feature>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -80,6 +84,16 @@ tkd
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD90vtUSV6D3GqGXKWeZp3YBnUKcnuuVQM" />
+
+        <provider
+            android:authorities="com.shuvic.alumni.cameraalbum"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
 
     </application>
 

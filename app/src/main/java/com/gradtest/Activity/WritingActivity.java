@@ -1,7 +1,19 @@
 package com.gradtest.Activity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +35,7 @@ import com.gradtest.Net.Net;
 import com.gradtest.R;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -37,8 +50,13 @@ import retrofit2.Response;
 
 public class WritingActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSION_STORAGE = 1111;
+    private static final int REQUEST_TAKE_ALBUM = 2222;
+
+    Uri albumURI,photoURI;
+    String mCurrentPhotoPath;
     TextView where_text;
-    TextView pin_text;
+    TextView pin_text,photo_text;
     Date date;
     int w_p1;
     int[] sp1;
@@ -77,8 +95,11 @@ public class WritingActivity extends AppCompatActivity {
         ImageButton cam_btn = (ImageButton)findViewById(R.id.cam);
         cam_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Intent intent_photo = new Intent(WritingActivity.this, PhotoActivity.class);
-                startActivity(intent_photo);
+                //Intent intent_photo = new Intent(WritingActivity.this, PhotoActivity.class);
+                //startActivity(intent_photo);
+                checkPermission();
+                getAlbum();
+
             }
         });
 
@@ -98,6 +119,13 @@ public class WritingActivity extends AppCompatActivity {
             }
         });
 
+
+        photo_text=(TextView)findViewById(R.id.photo_txt);
+        if(board_photo==null) {
+            photo_text.setText("[사진] : 첨부 파일 없음");
+        }else{
+            photo_text.setText("[사진] : " + albumURI.toString());
+        }
 
         pin_text=(TextView)findViewById(R.id.pin_txt);
         if(pin==null) {
@@ -213,12 +241,14 @@ public class WritingActivity extends AppCompatActivity {
 
                 board_title = title.getText().toString();
                 board_content = content.getText().toString();
-                index_temp=7;
-                Board board = new Board();
+                index_temp=12;
+                final Board board = new Board();
                 board.setBoard_title(board_title);
                 board.setBoard_content(board_content);
                 board.setBoard_category(board_category);
                 board.setUser_index(index_temp);
+                if(board_photo!=null)
+                board.setBoard_photos(board_photo);
 
                 Log.d("카테고리","sdf"+board.getBoard_category());
                 Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
@@ -229,8 +259,10 @@ public class WritingActivity extends AppCompatActivity {
                     public void onResponse(Call<Board> call, Response<Board> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(WritingActivity.this, "글쓰기 완료!", Toast.LENGTH_SHORT).show();
+                            Log.d("swsw","d"+board.getBoard_title());
                             Intent intent = new Intent(WritingActivity.this, MainActivity.class);
                             intent.putExtra("title",board_title);
+                            intent.putExtra("content",board_content);
                             intent.putExtra("switch",1);
                             startActivity(intent);
                         }else{
@@ -251,5 +283,91 @@ public class WritingActivity extends AppCompatActivity {
     }
 
 
+    private void checkPermission(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                new AlertDialog.Builder(this).setTitle("알림").setMessage("저장소 권한이 거부되었습니다. 설정에서 해당 권한을 직접 허용하셔야 합니다.").setNeutralButton("설정", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    }
+                }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setCancelable(false).create().show();
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_STORAGE);
+            }
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case MY_PERMISSION_STORAGE:
+                for(int i=0; i<grantResults.length; i++){
+                    if(grantResults[i]<0){
+                        Toast.makeText(WritingActivity.this, "해당 권한을 활성화 하셔야 합니다.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    break;
+                }
+        }
+    }
+
+    private void getAlbum(){
+        Log.i("getAlbum","call");
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, REQUEST_TAKE_ALBUM);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case REQUEST_TAKE_ALBUM:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data.getData() != null) {
+                        try {
+                            File albumFile = null;
+                            board_photo = createImageFile();
+                            photoURI = data.getData();
+                            albumURI = Uri.fromFile(board_photo);
+                            Log.e("TAKE_ALBUM_SUCCESS", albumURI.toString());
+                            Log.e("TAKE_ALBUM_SUCCESS", photoURI.toString());
+                        } catch (IOException ex) {
+                            Log.e("TAKE_ALBUM_SINGLE_ERROR", ex.toString());
+                        }
+                    } else {
+
+                    }
+                }break;
+        }
+
+
+    }
+
+    public File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new java.util.Date());
+        String imageFileName = "JPEG_" + timeStamp + ".jpg";
+        File imageFile = null;
+        File storageDir = new File(Environment.getExternalStorageDirectory()+"/Picture","sw");
+
+        if(!storageDir.exists()){
+            Log.i("mCurrentPhotoPath1", storageDir.toString());
+            storageDir.mkdirs();
+        }
+
+        imageFile = new File(storageDir,imageFileName);
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+
+        return imageFile;
+    }
 }

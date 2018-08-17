@@ -1,5 +1,6 @@
 package com.gradtest.DataType;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ public class Board {
         this.board_title = board_title;
         this.board_content = board_content;
         this.board_category = board_category;
-        this.board_photo = board_photo;
+        this.board_photos = board_photos;
         this.user_index=user_index;
     }
 
@@ -65,16 +66,15 @@ public class Board {
         this.data = data;
     }
 
-    public String getBoard_photo() {
-        return board_photo;
-    }
-
-    public void setBoard_photo(String board_photo) {
-        this.board_photo = board_photo;
-    }
-
-    String board_photo;
     int user_index;
     int board_category;
+    File board_photos;
 
+    public File getBoard_photos() {
+        return board_photos;
+    }
+
+    public void setBoard_photos(File board_photos) {
+        this.board_photos = board_photos;
+    }
 }

@@ -65,7 +65,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/story_txt"
             android:text="seolwon"
+            android:textStyle="bold"
             android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="content"
+            android:layout_marginTop="40dp"
+            android:textSize="17sp"
+            android:id="@+id/content_id"
+            android:layout_marginBottom="20dp"
+            />
 
     </RelativeLayout>>
 
