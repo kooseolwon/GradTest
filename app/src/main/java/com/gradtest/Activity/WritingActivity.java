@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,9 +42,13 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 
 /**
@@ -53,7 +60,7 @@ public class WritingActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_STORAGE = 1111;
     private static final int REQUEST_TAKE_ALBUM = 2222;
 
-    Uri albumURI,photoURI;
+    Uri albumURI,photoURI,realURI;
     String mCurrentPhotoPath;
     TextView where_text;
     TextView pin_text,photo_text;
@@ -63,13 +70,13 @@ public class WritingActivity extends AppCompatActivity {
     RadioButton btn_where1, btn_where2;
     RadioButton where1_1, where1_2;
     Spinner spinner1,spinner2;
-    String where,where2_0, where2_1, where2_2;
+    String where,where2_0, where2_1, where2_2, tk;
     ArrayAdapter<CharSequence> array,array2;
     EditText title,content;
 
-    String board_title, board_content;
-    File board_photo;
-    int board_category = 0;
+    String b_title, b_content;
+    File board_photo, imageFile;
+    int b_category = 0;
     String pin;
     int index_temp;
     Call<Board> res;
@@ -124,7 +131,7 @@ public class WritingActivity extends AppCompatActivity {
         if(board_photo==null) {
             photo_text.setText("[사진] : 첨부 파일 없음");
         }else{
-            photo_text.setText("[사진] : " + albumURI.toString());
+            //photo_text.setText("[사진] : " + albumURI.toString());
         }
 
         pin_text=(TextView)findViewById(R.id.pin_txt);
@@ -183,7 +190,7 @@ public class WritingActivity extends AppCompatActivity {
                 where2_0 = String.valueOf(tv.getText());
                 where_text.setText("지역설정 > 서울특별시 > " +where2_0);
 
-                board_category = position+1;
+                b_category = position+1;
             }
 
             @Override
@@ -213,7 +220,7 @@ public class WritingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinner1.setVisibility(View.GONE);
                 where_text.setText("지역설정 > 안함");
-                board_category =0;
+                b_category =0;
             }
         });
 
@@ -239,31 +246,63 @@ public class WritingActivity extends AppCompatActivity {
                 return true;
             case R.id.write_fin :
 
-                board_title = title.getText().toString();
-                board_content = content.getText().toString();
-                index_temp=12;
-                final Board board = new Board();
-                board.setBoard_title(board_title);
-                board.setBoard_content(board_content);
-                board.setBoard_category(board_category);
-                board.setUser_index(index_temp);
-                if(board_photo!=null)
-                board.setBoard_photos(board_photo);
+                b_title = title.getText().toString();
+                b_content = content.getText().toString();
 
-                Log.d("카테고리","sdf"+board.getBoard_category());
-                Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
+                //final Board board = new Board();
+               // board.setBoard_title(b_title);
+                //board.setBoard_content(b_content);
+                //board.setBoard_category(b_category);
+               // board.setUser_index(index_temp);
+                //board.setBoard_photos(board_photo);
 
-                res = Net.getInstance().getNetworkService().post_board(board);
+                /*SharedPreferences sh = getSharedPreferences("token",Activity.MODE_PRIVATE);
+                if(sh != null)
+                {
+                    tk = sh.getString("token","");
+                    Log.i("on",tk);
+                    Log.i("on",sh.getString("token",""));
+                }*/
+                tk = "temp";
+
+                RequestBody token = RequestBody.create(MediaType.parse("text/palin"),tk);
+
+
+                imageFile = new File(getRealPathFromURI(photoURI));
+
+                RequestBody board_photos = RequestBody.create(MediaType.parse(getContentResolver().getType(photoURI)),imageFile);
+              //  MultipartBody.Part body = MultipartBody.Part.createFormData("file", board_photo.getName(), reqFile);
+                Log.d("image","d"+board_photos.toString());
+                RequestBody board_title = RequestBody.create(MediaType.parse("text/plain"),b_title);
+                Log.d("title","d"+b_title);
+                RequestBody board_content = RequestBody.create(MediaType.parse("text/plain"),b_content);
+                Log.d("content","d"+b_content);
+                RequestBody board_category = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(b_category));
+                Log.d("category","d"+b_category);
+
+
+
+               // Log.d("카테고리","sdf"+board.getBoard_category());
+              //  Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
+
+                res = Net.getInstance().getNetworkService().post_board(tk,board_title,board_content,board_photos,board_category);
                 res.enqueue(new Callback<Board>() {
                     @Override
                     public void onResponse(Call<Board> call, Response<Board> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(WritingActivity.this, "글쓰기 완료!", Toast.LENGTH_SHORT).show();
-                            Log.d("swsw","d"+board.getBoard_title());
+                            //Log.d("swsw","d"+board.getBoard_title());
                             Intent intent = new Intent(WritingActivity.this, MainActivity.class);
-                            intent.putExtra("title",board_title);
-                            intent.putExtra("content",board_content);
-                            intent.putExtra("switch",1);
+                            //intent.putExtra("title",b_title);
+                            //intent.putExtra("content",b_content);
+                            //intent.putExtra("switch",1);
+
+                            //Board board = response.body();
+
+
+
+
+
                             startActivity(intent);
                         }else{
 
@@ -323,7 +362,7 @@ public class WritingActivity extends AppCompatActivity {
     private void getAlbum(){
         Log.i("getAlbum","call");
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
+        intent.setType("image/jpeg");
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, REQUEST_TAKE_ALBUM);
     }
@@ -340,8 +379,13 @@ public class WritingActivity extends AppCompatActivity {
                             board_photo = createImageFile();
                             photoURI = data.getData();
                             albumURI = Uri.fromFile(board_photo);
+                            String a = getRealPathFromURI(photoURI);
+                            realURI = Uri.parse(a);
+                            photo_text.setText("[사진] : " + albumURI.toString());
+
                             Log.e("TAKE_ALBUM_SUCCESS", albumURI.toString());
                             Log.e("TAKE_ALBUM_SUCCESS", photoURI.toString());
+                            Log.e("nnnnn", a);
                         } catch (IOException ex) {
                             Log.e("TAKE_ALBUM_SINGLE_ERROR", ex.toString());
                         }
@@ -354,9 +398,11 @@ public class WritingActivity extends AppCompatActivity {
 
     }
 
+
+
     public File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new java.util.Date());
-        String imageFileName = "JPEG_" + timeStamp + ".jpg";
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String imageFileName = "JPEG_" + timeStamp + ".jpeg";
         File imageFile = null;
         File storageDir = new File(Environment.getExternalStorageDirectory()+"/Picture","sw");
 
@@ -369,5 +415,16 @@ public class WritingActivity extends AppCompatActivity {
         mCurrentPhotoPath = imageFile.getAbsolutePath();
 
         return imageFile;
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
     }
 }

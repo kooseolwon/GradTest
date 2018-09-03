@@ -1,7 +1,11 @@
 package com.gradtest.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,10 +14,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gradtest.Adapter.WritingAdapter;
+import com.gradtest.ETC.ItemForm;
 import com.gradtest.ETC.MyLog;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
 import com.gradtest.DataType.User_login;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.Buffer;
+import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +89,112 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    @Override
                    public void onResponse(Call<User_login> call, Response<User_login> response) {
                        if (response.isSuccessful()) {
+
+                           if(android.os.Build.VERSION.SDK_INT>9){
+                               StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                               StrictMode.setThreadPolicy(policy);
+                           }
+
+
+
+
+
+
+
+
+
+
+                           // GET방식 테스트
+                           InputStream inputStream = null;
+                           String result = "";
+                           try{
+                               HttpClient httpclient = new DefaultHttpClient();
+                               HttpResponse httpResponse = httpclient.execute(new HttpGet("http://52.78.129.27:3000/login/signin"));
+                               inputStream = httpResponse.getEntity().getContent();
+                               if(inputStream != null){
+                                   result = convertInputStreamToString(inputStream);
+                                   JSONObject reader = new JSONObject(result);
+                                   Log.d("result11111 : ", result);
+                               }else{
+                                   result = "Did not work";
+                                   Log.d("result22222 : ", result);
+                               }
+                          //     Message msg = new Message();
+                            //   Bundle b = new Bundle();
+                              // b.putString("what",result);
+                              // msg.setData(b);
+                               // mhandler1.sendMessage(msg);
+
+                           }catch(Exception e){
+                               Log.d("InputStream", e.getLocalizedMessage());
+                           }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+                           try {
+
+                               String urlStr = "http://52.78.129.27:3000/login/signin";
+                               URL url = new URL(urlStr);
+
+                               InputStreamReader isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
+                               JSONObject object = (JSONObject) JSONValue.parseWithException(isr);
+
+                               System.out.println("jObj : " + object.toString());
+                               System.out.println("message : " + object.get("message"));
+                               System.out.println("token : " + object.get("token"));
+
+
+                               String tk = object.get("token").toString();
+                               System.out.print("tokenStr : " +tk);
+
+                               SharedPreferences sh = getSharedPreferences("token", Activity.MODE_PRIVATE);
+                               SharedPreferences.Editor edit = sh.edit();
+                               edit.putString("token",tk);
+                               edit.commit();
+
+
+
+
+
+/*String main = object.toString();
+                               JSONObject obj = (JSONObject) JSONValue.parse(main);
+                               JSONArray array = (JSONArray) obj.get("data");
+                               for(int i=0; i<array.size(); i++) {
+                                   JSONObject j = (JSONObject) array.get(i);
+                                   System.out.println("title " + i + "번째 : " + j.get("board_title"));
+                                   System.out.println("id " + i + "번째 : " + j.get("user_name"));
+                                   user_name.add(j.get("user_name").toString());
+                                   board_title.add(j.get("board_title").toString());
+
+                /*list.add(new ItemForm(user_name.get(i),R.drawable.jjang1,board_title.get(i),""));
+                wadapter = new WritingAdapter(this, list);
+                rcv.setAdapter(wadapter);*/
+
+
+/*
+                           }catch(Exception e){
+                               e.printStackTrace();
+                           }
+*/
+
+
+
+
                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                            Log.v("seolwonk", String.valueOf(response.body().getUser_index()));
 
@@ -110,4 +237,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine())!=null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
+
+
+
 }

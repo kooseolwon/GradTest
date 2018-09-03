@@ -6,10 +6,15 @@ import com.gradtest.DataType.User_login;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * Created by sm-pc on 2018-05-30.
@@ -34,8 +39,16 @@ public interface NetworkService {
     Call<Res_login> signin(@Body Req_login user_login);*/
 
     //게시물작성
+
+
+
+    @Multipart
     @POST("board/write")
-    Call<Board> post_board(@Body Board board);
+    Call<Board> post_board( @Header("token")String token,
+                            @Part("board_title")RequestBody board_title,
+                            @Part("board_content")RequestBody board_content,
+                            @Part("image\"; filename=\"myfile.jpeg\" ") RequestBody board_photos,
+                            @Part("board_category")RequestBody board_category);
 
     /*
     @POST("board/write")
@@ -44,5 +57,7 @@ public interface NetworkService {
     //게시물보기
     @GET("board/show")
     Call<Board> show_board();
+
+
 
 }
