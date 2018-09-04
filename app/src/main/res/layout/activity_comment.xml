@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/commentBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="댓글 쓰기"
+            android:textSize="20pt"
+            android:textAlignment="center"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
