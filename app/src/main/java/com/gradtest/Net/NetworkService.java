@@ -4,9 +4,6 @@ import com.gradtest.DataType.Board;
 import com.gradtest.DataType.User;
 import com.gradtest.DataType.User_login;
 
-import java.util.List;
-
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -40,15 +37,19 @@ public interface NetworkService {
 
     //게시물작성
 
+/*
+    @Multipart
+    @POST("board/write")
+    Call<Board> post_board(@Header ("token") String user_token, @Body Board board);
+*/
 
 
     @Multipart
     @POST("board/write")
-    Call<Board> post_board( @Header("token")String token,
-                            @Part("board_title")RequestBody board_title,
+    Call<Board> post_board( @Part("board_title")RequestBody board_title,
                             @Part("board_content")RequestBody board_content,
-                            @Part("image\"; filename=\"myfile.jpeg\" ") RequestBody board_photos,
-                            @Part("board_category")RequestBody board_category);
+                            @Part("board_category")RequestBody board_category,
+                            @Part("user_index")RequestBody user_index);
 
     /*
     @POST("board/write")

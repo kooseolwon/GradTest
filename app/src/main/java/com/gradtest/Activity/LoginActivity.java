@@ -90,115 +90,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    public void onResponse(Call<User_login> call, Response<User_login> response) {
                        if (response.isSuccessful()) {
 
-                           if(android.os.Build.VERSION.SDK_INT>9){
-                               StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                               StrictMode.setThreadPolicy(policy);
-                           }
-
-
-
-
-
-
-
-
-
-
-                           // GET방식 테스트
-                           InputStream inputStream = null;
-                           String result = "";
-                           try{
-                               HttpClient httpclient = new DefaultHttpClient();
-                               HttpResponse httpResponse = httpclient.execute(new HttpGet("http://52.78.129.27:3000/login/signin"));
-                               inputStream = httpResponse.getEntity().getContent();
-                               if(inputStream != null){
-                                   result = convertInputStreamToString(inputStream);
-                                   JSONObject reader = new JSONObject(result);
-                                   Log.d("result11111 : ", result);
-                               }else{
-                                   result = "Did not work";
-                                   Log.d("result22222 : ", result);
-                               }
-                          //     Message msg = new Message();
-                            //   Bundle b = new Bundle();
-                              // b.putString("what",result);
-                              // msg.setData(b);
-                               // mhandler1.sendMessage(msg);
-
-                           }catch(Exception e){
-                               Log.d("InputStream", e.getLocalizedMessage());
-                           }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-                           try {
-
-                               String urlStr = "http://52.78.129.27:3000/login/signin";
-                               URL url = new URL(urlStr);
-
-                               InputStreamReader isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
-                               JSONObject object = (JSONObject) JSONValue.parseWithException(isr);
-
-                               System.out.println("jObj : " + object.toString());
-                               System.out.println("message : " + object.get("message"));
-                               System.out.println("token : " + object.get("token"));
-
-
-                               String tk = object.get("token").toString();
-                               System.out.print("tokenStr : " +tk);
-
-                               SharedPreferences sh = getSharedPreferences("token", Activity.MODE_PRIVATE);
-                               SharedPreferences.Editor edit = sh.edit();
-                               edit.putString("token",tk);
-                               edit.commit();
-
-
-
-
-
-/*String main = object.toString();
-                               JSONObject obj = (JSONObject) JSONValue.parse(main);
-                               JSONArray array = (JSONArray) obj.get("data");
-                               for(int i=0; i<array.size(); i++) {
-                                   JSONObject j = (JSONObject) array.get(i);
-                                   System.out.println("title " + i + "번째 : " + j.get("board_title"));
-                                   System.out.println("id " + i + "번째 : " + j.get("user_name"));
-                                   user_name.add(j.get("user_name").toString());
-                                   board_title.add(j.get("board_title").toString());
-
-                /*list.add(new ItemForm(user_name.get(i),R.drawable.jjang1,board_title.get(i),""));
-                wadapter = new WritingAdapter(this, list);
-                rcv.setAdapter(wadapter);*/
-
-
-/*
-                           }catch(Exception e){
-                               e.printStackTrace();
-                           }
-*/
-
-
-
 
                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                            Log.v("seolwonk", String.valueOf(response.body().getUser_index()));
 
                            int useridx = response.body().getUser_index();
+
+                           String tk = response.body().getToken();
+
+                           SharedPreferences sh = getSharedPreferences("index", Activity.MODE_PRIVATE);
+                           SharedPreferences.Editor edit = sh.edit();
+                           edit.putInt("index",useridx);
+                           edit.commit();
+
 
 
 
@@ -207,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                            intent.putExtra("uidx",useridx);
 
                            startActivity(intent);
+                           MyLog.d("Login 통신", tk);
 
                        }else{
                            MyLog.d("Login 통신", "실패 1 response 내용이 없음");
@@ -239,17 +144,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine())!=null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
 
 
 

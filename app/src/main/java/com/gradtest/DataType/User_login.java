@@ -1,5 +1,8 @@
 package com.gradtest.DataType;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  * Created by sm-pc on 2018-05-31.
  */
@@ -42,5 +45,16 @@ public class User_login {
         this.user_index = user_index;
     }
 
-    int user_index;
+   int user_index;
+    String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.gradtest.Net;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,9 +17,9 @@ public class Net {
 
     private Net(){}
 
+
     private Retrofit retrofit = new Retrofit.Builder()
-    .baseUrl("http://52.78.129.27:3000")
-    .addConverterFactory(GsonConverterFactory.create()).build();
+    .baseUrl("http://52.78.129.27:3000").addConverterFactory(GsonConverterFactory.create()).build();
 
     NetworkService networkService;
 

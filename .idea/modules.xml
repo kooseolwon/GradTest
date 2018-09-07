@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GradTest.iml" filepath="$PROJECT_DIR$/GradTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/GradTest0418.iml" filepath="$PROJECT_DIR$/GradTest0418.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/graduAndroid.iml" filepath="$PROJECT_DIR$/graduAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/json-simple-1.1.1/json-simple-1.1.1.iml" filepath="$PROJECT_DIR$/json-simple-1.1.1/json-simple-1.1.1.iml" />
     </modules>
   </component>

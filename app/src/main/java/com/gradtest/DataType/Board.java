@@ -12,6 +12,7 @@ public class Board {
     public Board(){}
 
     public Board(String board_title, String board_content, int board_category){
+        //this.token = token;
         this.board_title = board_title;
         this.board_content = board_content;
         this.board_category = board_category;
@@ -20,6 +21,10 @@ public class Board {
     }
 
 
+    String token;
+
+    public String getToken(){return token;}
+    public void setToken(String token){this.token = token;}
 
     public String getBoard_title() {
         return board_title;
