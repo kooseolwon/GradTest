@@ -119,6 +119,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="[위치] : 위치 정보 없음" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/photoView"
+                android:src="@drawable/jjang4"/>
         </LinearLayout>
 
 

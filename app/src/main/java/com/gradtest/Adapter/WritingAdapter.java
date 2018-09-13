@@ -45,6 +45,12 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
         holder.personalId.setText(data.getId());
 
         holder.writtingTxt.setText(data.getTxt());
+        holder.timeTxt.setText(data.getTimeTxt());
+
+
+
+
+
 
 
 
@@ -56,6 +62,9 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
 
         TextView writtingTxt;
         TextView personalId;
+        TextView timeTxt;
+
+
         String wrTxt;
 
 
@@ -65,9 +74,10 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
 
 
 
-            ;
+
             writtingTxt = (TextView) itemview.findViewById(R.id.person_id1);
             personalId = (TextView) itemview.findViewById(R.id.person_id);
+            timeTxt = (TextView) itemview.findViewById(R.id.time_id);
 
 
 
@@ -75,20 +85,26 @@ public class WritingAdapter extends RecyclerView.Adapter<WritingAdapter.MyViewho
             itemview.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-//                    Log.v("TWICE",Integer.toString(getAdapterPosition()));
+                    Log.v("TWICE",Integer.toString(getAdapterPosition()));
 //                    Log.v("kooseolwon",wrTxt);
                     Log.v("koooo",datalist.get(getAdapterPosition()).getTxt());
 
 
-
-
-
-
                     Intent intent = new Intent(v.getContext(), ArticleActivity.class);
+
                     intent.putExtra("story",datalist.get(getAdapterPosition()).getTxt());
+                    Log.v("test_story",datalist.get(getAdapterPosition()).getTxt());
+
                     intent.putExtra("ID",datalist.get(getAdapterPosition()).getId());
+                    Log.v("test_ID",datalist.get(getAdapterPosition()).getId());
+
                     intent.putExtra("content",datalist.get(getAdapterPosition()).getContent());
-                  ///  intent.putExtra("img",datalist.get(getAdapterPosition()).getImageNumber());
+                    Log.v("test_content",datalist.get(getAdapterPosition()).getContent());
+
+                    //intent.putExtra("board_index",datalist.get(getAdapterPosition()).getBoard_index());
+                    //Log.v("test_content",String.valueOf(datalist.get(getAdapterPosition()).getBoard_index()));
+
+                    intent.putExtra("img",datalist.get(getAdapterPosition()).getImageNumber());
 
 
                     v.getContext().startActivity(intent);

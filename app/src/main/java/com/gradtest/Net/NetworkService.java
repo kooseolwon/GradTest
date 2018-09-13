@@ -4,6 +4,7 @@ import com.gradtest.DataType.Board;
 import com.gradtest.DataType.User;
 import com.gradtest.DataType.User_login;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -49,7 +50,9 @@ public interface NetworkService {
     Call<Board> post_board( @Part("board_title")RequestBody board_title,
                             @Part("board_content")RequestBody board_content,
                             @Part("board_category")RequestBody board_category,
-                            @Part("user_index")RequestBody user_index);
+                            @Part("user_index")RequestBody user_index,
+                            @Part("board_location")RequestBody board_location,
+                            @Part MultipartBody.Part board_photo);
 
     /*
     @POST("board/write")

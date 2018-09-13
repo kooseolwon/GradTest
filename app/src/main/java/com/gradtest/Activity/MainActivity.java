@@ -1,6 +1,8 @@
 package com.gradtest.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rcv;
     LinearLayoutManager llm;
     WritingAdapter wadapter;
+    List<String> index,time;
     String date,id,title,item,content;
+
     //String user_name[]={}, board_title[]={};
     int switch_num = 0;
     int switchn = 0;
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> user_name = new ArrayList<String>();
         List<String> board_title = new ArrayList<String>();
+        index = new ArrayList<String>();
+        time = new ArrayList<String>();
 
 
         Button btn_w = (Button)findViewById(R.id.writing_btn);
@@ -163,8 +169,13 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject j = (JSONObject) array.get(i);
                 System.out.println("title " + i + "번째 : " + j.get("board_title"));
                 System.out.println("id " + i + "번째 : " + j.get("user_name"));
+                System.out.println("time " +i + "번째 : " + j.get("board_time"));
                 user_name.add(j.get("user_name").toString());
                 board_title.add(j.get("board_title").toString());
+                index.add(j.get("board_index").toString());
+                time.add(j.get("board_time").toString());
+
+
 
                 /*list.add(new ItemForm(user_name.get(i),R.drawable.jjang1,board_title.get(i),""));
                 wadapter = new WritingAdapter(this, list);
@@ -172,10 +183,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             for(int i=array.size()-1; i>0; i--){
-                list.add(new ItemForm(user_name.get(i),R.drawable.jjang1,board_title.get(i),""));
+                list.add(new ItemForm(user_name.get(i),R.drawable.jjang1,board_title.get(i),index.get(i),time.get(i)));
                 wadapter = new WritingAdapter(this, list);
                 rcv.setAdapter(wadapter);
             }
+
 
 
         }catch(Exception e){

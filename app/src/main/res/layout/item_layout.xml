@@ -35,7 +35,19 @@
         android:layout_marginBottom="20dp"
         />
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TIME"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@id/person_id2"
+        android:layout_marginLeft="600dp"
+        android:textSize="17sp"
+        android:id="@+id/time_id"
+        android:layout_marginBottom="20dp"
+        />
 
 
 

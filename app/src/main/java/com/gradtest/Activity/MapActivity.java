@@ -2,8 +2,10 @@ package com.gradtest.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -98,6 +100,11 @@ public class MapActivity extends AppCompatActivity
                Intent intent_add = new Intent(MapActivity.this, WritingActivity.class);
                intent_add.putExtra("pin",pin_text);
                startActivity(intent_add);
+
+               SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
+               SharedPreferences.Editor edit = location.edit();
+               edit.putString("location",pin_text);
+               edit.commit();
 
            }
        });

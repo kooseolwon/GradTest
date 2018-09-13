@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="꺄르륵"
+            android:text="꺄르륵 "
             android:layout_alignParentRight="true"
             android:id="@+id/filter_btn"
             />
@@ -66,14 +66,37 @@
             android:id="@+id/story_txt"
             android:text="seolwon"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="23sp"/>
+
+        <ImageView
+            android:id="@+id/boardPhoto"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:layout_below="@+id/pin_id"/>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="content"
-            android:layout_marginTop="40dp"
+            android:layout_below="@+id/story_txt"
+            android:layout_marginTop="20dp"
             android:textSize="17sp"
             android:id="@+id/content_id"
+            android:layout_marginBottom="20dp"
+            />
+
+        <TextView
+            android:layout_below="@+id/content_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="위치정보 없음"
+            android:layout_marginTop="40dp"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:id="@+id/pin_id"
             android:layout_marginBottom="20dp"
             />
 

@@ -1,11 +1,22 @@
 package com.gradtest.Activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,14 +35,19 @@ import android.widget.Toast;
 
 import com.gradtest.DataType.Board;
 import com.gradtest.ETC.MyLog;
+import com.gradtest.Lib.FileLib;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +64,7 @@ public class WritingActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_ALBUM = 2222;
 
     Uri albumURI,photoURI,realURI;
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath,path;
     TextView where_text;
     TextView pin_text,photo_text;
     Date date;
@@ -61,17 +78,27 @@ public class WritingActivity extends AppCompatActivity {
     EditText title,content;
 
     String b_title, b_content;
-    File board_photo, imageFile;
+    File photo, imageFile;
     int b_category = 0;
-    String pin;
+    String pin,real;
     int index_temp, userindex;
     Call<Board> res;
-    Boolean photoCheck=false;
+    Boolean photoCheck, pinCheck;
+    RequestBody board_title, board_content,user_index, board_category, board_location;
+    MultipartBody.Part board_photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
+
+
+
+        photoCheck = false;
+        pinCheck = false;
+        board_photo = null;
+        board_location = null;
+
 
         Intent intent = super.getIntent();
 
@@ -91,7 +118,10 @@ public class WritingActivity extends AppCompatActivity {
             public void onClick(View view){
                 //Intent intent_photo = new Intent(WritingActivity.this, PhotoActivity.class);
                 //startActivity(intent_photo);
+                photoCheck = true;
 
+                checkPermission();
+                getAlbum();
 
             }
         });
@@ -106,6 +136,8 @@ public class WritingActivity extends AppCompatActivity {
         ImageButton pin_btn = (ImageButton)findViewById(R.id.pin);
         pin_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+                pinCheck = true;
+
                 Intent intent_pin = new Intent(WritingActivity.this, MapActivity.class);
                 startActivity(intent_pin);
 
@@ -253,6 +285,19 @@ public class WritingActivity extends AppCompatActivity {
                 }
 
 
+                if(pinCheck) {
+
+                    SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
+                    if (location != null) {
+                        board_location = RequestBody.create(MediaType.parse("text"), pin.getBytes());
+                        Log.d("swsw2", "location_" + board_location.toString());
+                    } else {
+                        board_location = null;
+                    }
+
+                }
+                else{board_location = null;}
+
 
                 //board.setToken(tk);
 
@@ -262,17 +307,30 @@ public class WritingActivity extends AppCompatActivity {
 
               //  MultipartBody.Part body = MultipartBody.Part.createFormData("file", board_photo.getName(), reqFile);
 
-                RequestBody board_title = RequestBody.create(MediaType.parse("text"),b_title.getBytes());
-                RequestBody board_content = RequestBody.create(MediaType.parse("text"),b_content.getBytes());
-                RequestBody board_category = RequestBody.create(MediaType.parse("text"), String.valueOf(b_category).getBytes());
-                RequestBody user_index = RequestBody.create(MediaType.parse("text"),String.valueOf(userindex).getBytes());
+                board_title = RequestBody.create(MediaType.parse("text"),b_title.getBytes());
+                board_content = RequestBody.create(MediaType.parse("text"),b_content.getBytes());
+                board_category = RequestBody.create(MediaType.parse("text"), String.valueOf(b_category).getBytes());
+                user_index = RequestBody.create(MediaType.parse("text"),String.valueOf(userindex).getBytes());
+
+
+                if(photoCheck){
+
+
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/jpeg"),imageFile);
+                    board_photo = MultipartBody.Part.createFormData("file",imageFile.getName(),requestFile);
+                }
+
+                if (!photoCheck){
+                    board_photo=null;
+                }
+                else{}
 
 
 
                 // Log.d("카테고리","sdf"+board.getBoard_category());
               //  Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
 
-                res = Net.getInstance().getNetworkService().post_board(board_title, board_content, board_category,user_index);
+                res = Net.getInstance().getNetworkService().post_board(board_title, board_content, board_category,user_index,board_location,board_photo);
                 res.enqueue(new Callback<Board>() {
                     @Override
                     public void onResponse(Call<Board> call, Response<Board> response) {
@@ -302,9 +360,125 @@ public class WritingActivity extends AppCompatActivity {
         }
     }
 
+    private void checkPermission(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                new AlertDialog.Builder(this).setTitle("알림").setMessage("저장소 권한이 거부되었습니다. 설정에서 해당 권한을 직접 허용하셔야 합니다.").setNeutralButton("설정", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    }
+                }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setCancelable(false).create().show();
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_STORAGE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case MY_PERMISSION_STORAGE:
+                for(int i=0; i<grantResults.length; i++){
+                    if(grantResults[i]<0){
+                        Toast.makeText(WritingActivity.this, "해당 권한을 활성화 하셔야 합니다.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    break;
+                }
+        }
+    }
+
+    private void getAlbum(){
+        Log.i("getAlbum","call");
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, REQUEST_TAKE_ALBUM);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case REQUEST_TAKE_ALBUM:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data.getData() != null) {
+                        try {
+                            File albumFile = null;
+
+                            photo = createImageFile();
 
 
+                            photo = Environment.getExternalStorageDirectory();
+                            path = photo.getPath();
+                            Log.e("PATH" , path);
 
+                            photoURI = data.getData();
+                            real = getRealPathFromURI(photoURI);
+                            Log.e("aaaaa", real);
+                            albumURI = Uri.fromFile(photo);
+                            photo_text.setText("[사진] : " + albumURI.toString());
+                            Log.e("TAKE_ALBUM_SUCCESS", albumURI.toString());
+                            Log.e("TAKE_ALBUM_SUCCESS", photoURI.toString());
+
+
+                            ImageView photoView = (ImageView)findViewById(R.id.photoView);
+                            Picasso.with(this).load(photo).into(photoView);
+
+                        } catch (IOException ex) {
+                            Log.e("TAKE_ALBUM_SINGLE_ERROR", ex.toString());
+                        }
+                    } else {
+
+                    }
+                }break;
+        }
+
+
+    }
+
+    public File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String imageFileName = "PNG_" + timeStamp;
+        File imageFile = null;
+        File storageDir = new File(Environment.getExternalStorageDirectory()+"/Pictures","sw");
+
+        if(!storageDir.exists()){
+            Log.i("mCurrentPhotoPath1", storageDir.toString());
+            storageDir.mkdirs();
+        }
+
+        imageFile = new File(storageDir,imageFileName);
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+        Log.i("Current", mCurrentPhotoPath);
+
+        return imageFile;
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String filePath;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            filePath = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            filePath = cursor.getString(idx);
+            cursor.close();
+        }
+
+        return filePath;
+
+    }
 
     }
 
