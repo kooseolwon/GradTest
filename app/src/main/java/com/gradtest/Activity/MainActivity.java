@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 rcv.setAdapter(wadapter);*/
             }
 
-            for(int i=array.size()-1; i>0; i--){
+            for(int i=array.size()-1; i>=0; i--){
                 list.add(new ItemForm(user_name.get(i),R.drawable.jjang1,board_title.get(i),index.get(i),time.get(i)));
                 wadapter = new WritingAdapter(this, list);
                 rcv.setAdapter(wadapter);

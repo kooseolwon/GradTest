@@ -92,12 +92,14 @@ public class WritingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
 
-        SharedPreferences pinCheck = getSharedPreferences("pinCheck", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor edit = pinCheck.edit();
+
+
+        SharedPreferences pinCheck1 = getSharedPreferences("pinCheck1", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pinCheck1.edit();
         edit.putBoolean("pinCheck",false);
         edit.commit();
 
-
+        pinCheck=false;
         photoCheck = false;
         board_photos = null;
         board_location = null;
@@ -141,15 +143,17 @@ public class WritingActivity extends AppCompatActivity {
         ImageButton pin_btn = (ImageButton)findViewById(R.id.pin);
         pin_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                SharedPreferences pinCheck = getSharedPreferences("pinCheck",Activity.MODE_PRIVATE);
+                SharedPreferences pinCheck1 = getSharedPreferences("pinCheck1",Activity.MODE_PRIVATE);
                 if(pin != null)
                 {
-                    SharedPreferences.Editor edit = pinCheck.edit();
-                    edit.putBoolean("pinCheck",true);
+                    SharedPreferences.Editor edit = pinCheck1.edit();
+                    edit.putBoolean("pinCheck1",true);
+
                 }
 
                 Intent intent_pin = new Intent(WritingActivity.this, MapActivity.class);
                 startActivity(intent_pin);
+                pinCheck = true;
 
             }
         });
@@ -295,7 +299,7 @@ public class WritingActivity extends AppCompatActivity {
                 }
 
 
-                if(pinCheck=true) {
+                if(pinCheck) {
 
                     SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
                     if (location != null) {

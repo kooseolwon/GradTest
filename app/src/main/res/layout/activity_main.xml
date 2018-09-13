@@ -10,20 +10,8 @@
         android:id="@+id/all_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#60369C">
-        <ImageButton
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/logo_image"
-            android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/mypage_icon"
-            />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/logo_image"
-            android:layout_centerInParent="true"/>
+        android:background="@color/colorPrimary3">
+
         <Button
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"

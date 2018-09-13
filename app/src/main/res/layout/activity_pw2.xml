@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="match_parent"
@@ -9,12 +9,18 @@
         android:layout_weight="1"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
         android:text="비밀번호 설정"
-        android:textSize="15pt" />
+        android:textSize="18pt" />
 
     <LinearLayout
+        android:layout_marginTop="250dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -23,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="새 비밀번호" />
+            android:text="새 비밀번호"
+            android:textSize="17sp"/>
 
         <EditText
             android:id="@+id/editText1"
@@ -37,14 +44,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="150dp">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="17sp"
             android:text="비밀번호 확인" />
 
         <EditText
@@ -59,10 +70,11 @@
 
     <Button
         android:id="@+id/savepw"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:layout_marginTop="150dp"
         android:text="저장" />
 
 </LinearLayout>

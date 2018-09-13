@@ -6,10 +6,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/logo_img"
         android:layout_centerInParent="true"
-        android:layout_above="@+id/IDEDIT">
+        android:layout_above="@+id/IDEDIT"
+        android:layout_marginBottom="20dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:id="@+id/logo_image"
             android:background="@drawable/logo_image"
             />
@@ -24,15 +25,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ID"
-        android:textSize="15dp"
+        android:textSize="17dp"
         android:id="@+id/loginid"
         />
     <EditText
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/loginid"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textAlignment="center"
+        android:textSize="17dp"
         android:hint="text"
         android:id="@+id/et_loginid"
         />
@@ -48,14 +50,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/passwordtxt"
             android:layout_centerVertical="true"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:text="PW"/>
         <EditText
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/passwordtxt"
-            android:layout_width="wrap_content"
+            android:password="true"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textAlignment="center"
+            android:textSize="17dp"
             android:hint="text"
             android:id="@+id/et_passwordtxt"/>
     </RelativeLayout>
@@ -64,6 +68,7 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_below="@+id/layout_pw"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/login_btn"

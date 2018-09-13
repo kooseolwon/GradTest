@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#CFAFE7</color>
-    <color name="colorPrimaryDark">#b985e1</color>
+    <color name="colorPrimary2">#CFAFE7</color>
+    <color name="colorPrimaryDark2">#b985e1</color>
     <color name="colorAccent">#FF4081</color>
     <color name="board">#FFFCFC</color>
+
+    <color name="colorPrimary3">#FFEBEB</color>
+    <color name="colorPrimary">#FFDDDD</color>
+    <color name="colorPrimaryDark">#FFDDDD</color>
+    <color name="blue">#DEEBF7</color>
+    <color name="bblue">#CADFF2</color>
 </resources>
