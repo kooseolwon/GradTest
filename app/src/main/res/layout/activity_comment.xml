@@ -1,21 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/commentBtn"
+
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="댓글 쓰기"
-            android:textSize="20pt"
-            android:textAlignment="center"/>
+            android:id="@+id/recycler_comment">
+
+        </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="800dp">
+
+        <EditText
+            android:layout_marginLeft="30dp"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editComment"
+            android:hint="덧글을 입력하세요."
+            />
+
+        <Button
+            android:layout_toRightOf="@+id/editComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="덧글등록"
+            android:textAlignment="center"
+            android:id="@+id/commentRegist"
+            />
+
 
     </RelativeLayout>
+
 
 </RelativeLayout>

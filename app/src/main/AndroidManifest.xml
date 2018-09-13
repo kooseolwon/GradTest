@@ -89,6 +89,13 @@ tkd
                         <category android:name="android.intent.category.LAUNCHER" />
                     </intent-filter>
                 </activity>
+        <activity android:name=".Activity.CommentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD90vtUSV6D3GqGXKWeZp3YBnUKcnuuVQM" />

@@ -1,6 +1,8 @@
 package com.gradtest.Net;
 
 import com.gradtest.DataType.Board;
+import com.gradtest.DataType.Comment;
+import com.gradtest.DataType.Comment_regist;
 import com.gradtest.DataType.User;
 import com.gradtest.DataType.User_login;
 
@@ -8,11 +10,14 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 /**
  * Created by sm-pc on 2018-05-30.
@@ -61,6 +66,16 @@ public interface NetworkService {
     //게시물보기
     @GET("board/show")
     Call<Board> show_board();
+
+    @POST("comment/write")
+    Call<Comment_regist> post_comment(@Body Comment_regist comment_regist);
+
+    @GET("comment/show/{board_index}")
+    Call<Comment> show_comment(
+            @Path("board_index") int board_index);
+
+    @DELETE("board/delete")
+    Call deletePost(@Path("board_index")int board_index);
 
 
 

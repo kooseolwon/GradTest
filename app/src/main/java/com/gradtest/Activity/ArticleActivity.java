@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import java.net.URL;
 
 public class ArticleActivity extends AppCompatActivity {
 
+    int board_index;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class ArticleActivity extends AppCompatActivity {
         TextView content = (TextView)findViewById(R.id.content_id);
         TextView location = (TextView)findViewById(R.id.pin_id);
         ImageView imgView = (ImageView)findViewById(R.id.boardPhoto);
+        Button commentView = (Button)findViewById(R.id.commentView);
 
 
         String a = intent.getStringExtra("story");
@@ -71,6 +74,7 @@ public class ArticleActivity extends AppCompatActivity {
             {
                 urlStr = "http://52.78.129.27:3000/board/detail/"+c;
                 Log.i("urlStr = ",urlStr);
+                board_index = Integer.parseInt(c);
             }
 
            // String urlStr = "http://52.78.129.27:3000/board/show";
@@ -115,6 +119,16 @@ public class ArticleActivity extends AppCompatActivity {
 
 
 
+        commentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ArticleActivity.this, CommentActivity.class);
+                intent.putExtra("board_index",board_index);
+                startActivity(intent);
+
+
+            }
+        });
 
 
 
