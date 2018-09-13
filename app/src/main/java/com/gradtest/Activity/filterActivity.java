@@ -1,5 +1,6 @@
 package com.gradtest.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -61,17 +62,20 @@ public class filterActivity extends AppCompatActivity{
             ArrayList arr = new ArrayList();
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent();
-                //intent.putExtra("area_filter", map);
+
                 System.out.println("들어왔"+map);
                 for(int a = 0; a<map.size();a++){
                     if(map.get(a)){
                         arr.add(a);
                     }
                 }
-
-               // setResult(RESULT_OK,intent);
+                System.out.println("koko"+arr);
+                Intent intent00 = new Intent();//여기에 MainActivity.class 인자로 넣어줘야 ㅎㅏ지않아..?그 startActivity는 그렇게하던데
+                intent00.putExtra("filterIntent",arr);
+                setResult(RESULT_OK, intent00);//앞 파라미터가 requestcode
                 finish();
+
+
             }
         });
 
