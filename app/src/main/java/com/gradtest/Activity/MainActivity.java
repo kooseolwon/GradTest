@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.gradtest.Adapter.WritingAdapter;
 import com.gradtest.DataType.Board;
@@ -19,14 +18,14 @@ import com.gradtest.ETC.ItemForm;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import org.json.simple.*;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,11 +36,24 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager llm;
     WritingAdapter wadapter;
     List<String> index,time;
+    ArrayList searchAreaArray;
     String date,id,title,item,content;
 
     //String user_name[]={}, board_title[]={};
     int switch_num = 0;
     int switchn = 0;
+
+
+    // 밑 부분은 필터 누르고 갖고온 결과를 처리해주는 부분임.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            searchAreaArray = new ArrayList();
+            Log.v("searchArea","들어옴");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +83,22 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(it_w);
                             }
+        });//글쓰기 버튼
+
+        Button btn_filter = (Button)findViewById(R.id.filter_btn);
+        btn_filter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                Intent it_filter = new Intent(MainActivity.this, filterActivity.class);
+                startActivity(it_filter);
+
+            }
         });
+
+
+
+
 
 
         rcv = (RecyclerView)findViewById(R.id.recycler);
@@ -88,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Board> call, Response<Board> response) {
                 if(response.isSuccessful()){
                     Board board = response.body();
-                    ArrayList data =    response.body().getData();
+                    ArrayList data = response.body().getData();
                     Log.v("seo",data.toString());
 
 
