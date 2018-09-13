@@ -65,6 +65,12 @@ public class filterAdapter extends RecyclerView.Adapter<filterViewholder> {
             }
 
         });//전국을 누르면 다른 것들이 취소되게!
+        if(position == 0){
+
+        }else{
+            
+        }
+
 
         if(items.get(position)){
             holder.region.setBackgroundColor(0xFFB985E1);
@@ -72,9 +78,8 @@ public class filterAdapter extends RecyclerView.Adapter<filterViewholder> {
         }else{
             holder.region.setBackgroundResource(R.drawable.rect);
 
-
-
         }
+
 
 
     }

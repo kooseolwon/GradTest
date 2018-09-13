@@ -18,6 +18,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Multipart;
+import retrofit2.http.Query;
 
 /**
  * Created by sm-pc on 2018-05-30.
@@ -65,7 +67,11 @@ public interface NetworkService {
 
     //게시물보기
     @GET("board/show")
-    Call<Board> show_board();
+    Call<Board> show_board(
+            @Query("board_category") String board_category
+    );
+
+
 
     @POST("comment/write")
     Call<Comment_regist> post_comment(@Body Comment_regist comment_regist);
