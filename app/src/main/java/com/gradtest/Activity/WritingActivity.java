@@ -83,7 +83,7 @@ public class WritingActivity extends AppCompatActivity {
     String pin,real;
     int index_temp, userindex;
     Call<Board> res;
-    Boolean photoCheck, pinCheck;
+    Boolean photoCheck, locationCheck;
     RequestBody board_title, board_content,user_index, board_category, board_location;
     MultipartBody.Part board_photos;
 
@@ -94,12 +94,12 @@ public class WritingActivity extends AppCompatActivity {
 
 
 
-        SharedPreferences pinCheck1 = getSharedPreferences("pinCheck1", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor edit = pinCheck1.edit();
+        SharedPreferences pinCheck = getSharedPreferences("pinCheck", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pinCheck.edit();
         edit.putBoolean("pinCheck",false);
         edit.commit();
 
-        pinCheck=false;
+        locationCheck = false;
         photoCheck = false;
         board_photos = null;
         board_location = null;
@@ -153,7 +153,7 @@ public class WritingActivity extends AppCompatActivity {
 
                 Intent intent_pin = new Intent(WritingActivity.this, MapActivity.class);
                 startActivity(intent_pin);
-                pinCheck = true;
+                locationCheck = true;
 
             }
         });
@@ -299,7 +299,7 @@ public class WritingActivity extends AppCompatActivity {
                 }
 
 
-                if(pinCheck) {
+                if(locationCheck) {
 
                     SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
                     if (location != null) {
