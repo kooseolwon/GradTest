@@ -92,7 +92,7 @@ public class PhotoActivity extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         imageItem = new ImageItem();
-        imageItem.infoSeq = infoSeq;
+        //imageItem.infoSeq = infoSeq;
 
         imageFilename = infoSeq + "_" + String.valueOf(System.currentTimeMillis());
         imageFile = FileLib.getInstance().getImageFile(context,imageFilename);

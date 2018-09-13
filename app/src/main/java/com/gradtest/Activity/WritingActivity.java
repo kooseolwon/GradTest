@@ -85,18 +85,21 @@ public class WritingActivity extends AppCompatActivity {
     Call<Board> res;
     Boolean photoCheck, pinCheck;
     RequestBody board_title, board_content,user_index, board_category, board_location;
-    MultipartBody.Part board_photo;
+    MultipartBody.Part board_photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
 
+        SharedPreferences pinCheck = getSharedPreferences("pinCheck", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pinCheck.edit();
+        edit.putBoolean("pinCheck",false);
+        edit.commit();
 
 
         photoCheck = false;
-        pinCheck = false;
-        board_photo = null;
+        board_photos = null;
         board_location = null;
 
 
@@ -118,6 +121,8 @@ public class WritingActivity extends AppCompatActivity {
             public void onClick(View view){
                 //Intent intent_photo = new Intent(WritingActivity.this, PhotoActivity.class);
                 //startActivity(intent_photo);
+
+
                 photoCheck = true;
 
                 checkPermission();
@@ -136,7 +141,12 @@ public class WritingActivity extends AppCompatActivity {
         ImageButton pin_btn = (ImageButton)findViewById(R.id.pin);
         pin_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                pinCheck = true;
+                SharedPreferences pinCheck = getSharedPreferences("pinCheck",Activity.MODE_PRIVATE);
+                if(pin != null)
+                {
+                    SharedPreferences.Editor edit = pinCheck.edit();
+                    edit.putBoolean("pinCheck",true);
+                }
 
                 Intent intent_pin = new Intent(WritingActivity.this, MapActivity.class);
                 startActivity(intent_pin);
@@ -146,7 +156,7 @@ public class WritingActivity extends AppCompatActivity {
 
 
         photo_text=(TextView)findViewById(R.id.photo_txt);
-        if(board_photo==null) {
+        if(board_photos==null) {
             photo_text.setText("[사진] : 첨부 파일 없음");
         }else{
             //photo_text.setText("[사진] : " + albumURI.toString());
@@ -285,7 +295,7 @@ public class WritingActivity extends AppCompatActivity {
                 }
 
 
-                if(pinCheck) {
+                if(pinCheck=true) {
 
                     SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
                     if (location != null) {
@@ -305,7 +315,7 @@ public class WritingActivity extends AppCompatActivity {
                 //RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"),tk);
                 //RequestBody board_photos = null;
 
-              //  MultipartBody.Part body = MultipartBody.Part.createFormData("file", board_photo.getName(), reqFile);
+                //  MultipartBody.Part body = MultipartBody.Part.createFormData("file", board_photo.getName(), reqFile);
 
                 board_title = RequestBody.create(MediaType.parse("text"),b_title.getBytes());
                 board_content = RequestBody.create(MediaType.parse("text"),b_content.getBytes());
@@ -315,22 +325,25 @@ public class WritingActivity extends AppCompatActivity {
 
                 if(photoCheck){
 
+                    File imageFile = new File(real.toString());
 
-                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/jpeg"),imageFile);
-                    board_photo = MultipartBody.Part.createFormData("file",imageFile.getName(),requestFile);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/png"),imageFile);
+                    board_photos = MultipartBody.Part.createFormData("board_photos",imageFile.getName(),requestFile);
+                    Log.i("카메라성공",board_photos.toString());
                 }
 
                 if (!photoCheck){
-                    board_photo=null;
+                    board_photos=null;
+                    Log.i("카메라실패ㅠ","");
                 }
                 else{}
 
 
 
                 // Log.d("카테고리","sdf"+board.getBoard_category());
-              //  Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
+                //  Log.d("인덱스","ㄴㅇㄹ"+board.getUser_index());
 
-                res = Net.getInstance().getNetworkService().post_board(board_title, board_content, board_category,user_index,board_location,board_photo);
+                res = Net.getInstance().getNetworkService().post_board(board_title, board_content, board_category,user_index,board_location,board_photos);
                 res.enqueue(new Callback<Board>() {
                     @Override
                     public void onResponse(Call<Board> call, Response<Board> response) {
@@ -426,7 +439,7 @@ public class WritingActivity extends AppCompatActivity {
                             real = getRealPathFromURI(photoURI);
                             Log.e("aaaaa", real);
                             albumURI = Uri.fromFile(photo);
-                            photo_text.setText("[사진] : " + albumURI.toString());
+                            photo_text.setText("[사진] : " + real.toString());
                             Log.e("TAKE_ALBUM_SUCCESS", albumURI.toString());
                             Log.e("TAKE_ALBUM_SUCCESS", photoURI.toString());
 
@@ -480,7 +493,7 @@ public class WritingActivity extends AppCompatActivity {
 
     }
 
-    }
+}
 
 
 

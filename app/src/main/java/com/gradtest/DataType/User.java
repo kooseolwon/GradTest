@@ -10,7 +10,7 @@ public class User {
 
     public User(){}
 
-    public User(String user_id, String user_pw, String user_name){
+    public User(String user_id, String user_pw, String user_name, int user_area){
         this.user_id = user_id;
         this.user_pw = user_pw;
         this.user_name = user_name;
@@ -45,5 +45,13 @@ public class User {
     String user_id;
     String user_pw;
     String user_name;
+    int user_area;
 
+    public int getUser_area() {
+        return user_area;
+    }
+
+    public void setUser_area(int user_area) {
+        this.user_area = user_area;
+    }
 }

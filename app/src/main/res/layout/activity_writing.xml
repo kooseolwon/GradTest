@@ -121,10 +121,10 @@
                 android:text="[위치] : 위치 정보 없음" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:id="@+id/photoView"
-                android:src="@drawable/jjang4"/>
+                />
         </LinearLayout>
 
 

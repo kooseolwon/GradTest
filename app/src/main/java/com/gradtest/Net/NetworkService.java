@@ -52,7 +52,7 @@ public interface NetworkService {
                             @Part("board_category")RequestBody board_category,
                             @Part("user_index")RequestBody user_index,
                             @Part("board_location")RequestBody board_location,
-                            @Part MultipartBody.Part board_photo);
+                            @Part MultipartBody.Part board_photos);
 
     /*
     @POST("board/write")

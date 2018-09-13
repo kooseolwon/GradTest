@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gradtest.ETC.MyLog;
@@ -29,18 +32,37 @@ public class JoinActivity extends AppCompatActivity {
     EditText et_name,et_id,et_pw;
     Spinner star_area;
     ArrayAdapter<CharSequence> array3;
+    int area_temp;
+    boolean areaCheck;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        areaCheck = false;
         et_name = (EditText)findViewById(R.id.signup_name);
         et_id = (EditText)findViewById(R.id.signup_id);
         et_pw = (EditText)findViewById(R.id.signup_pw);
         star_area = (Spinner)findViewById(R.id.star_area);
         array3 = ArrayAdapter.createFromResource(JoinActivity.this,R.array.array3,android.R.layout.simple_spinner_item);
         star_area.setAdapter(array3);
+        star_area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                areaCheck = true;
+                area_temp = position+1;
+                TextView tv = (TextView)view;
+                Log.i("포지션 : ",String.valueOf(position));
+                Log.i("값 : ", String.valueOf(tv.getText()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
 
         Button join = (Button)findViewById(R.id.join_btn);
@@ -66,6 +88,14 @@ public class JoinActivity extends AppCompatActivity {
                 user.setUser_id(id);
                 user.setUser_name(name);
                 user.setUser_pw(pw);
+
+                if(areaCheck){
+                    user.setUser_area(area_temp);
+                }else{
+                    area_temp = 0;
+                    user.setUser_area(area_temp);
+                }
+
 
                /* Req_join req_join = new Req_join();
                 req_join.setUser(new User(id,pw,name));
