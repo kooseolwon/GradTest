@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         index = new ArrayList<String>();
         time = new ArrayList<String>();
         rcv = (RecyclerView) findViewById(R.id.recycler);
+        rcv.addItemDecoration(new DividerItemDecoration(getApplication(),DividerItemDecoration.VERTICAL));
         llm = new LinearLayoutManager(this);
         rcv.setHasFixedSize(true);
         rcv.setLayoutManager(llm);

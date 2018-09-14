@@ -3,7 +3,6 @@ package com.gradtest.Activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,14 +34,12 @@ import android.widget.Toast;
 
 import com.gradtest.DataType.Board;
 import com.gradtest.ETC.MyLog;
-import com.gradtest.Lib.FileLib;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -217,7 +214,7 @@ public class WritingActivity extends AppCompatActivity {
                 where2_0 = String.valueOf(tv.getText());
                 where_text.setText("지역설정 > 서울특별시 > " +where2_0);
 
-                b_category = position+1;
+                b_category = position;
             }
 
             @Override

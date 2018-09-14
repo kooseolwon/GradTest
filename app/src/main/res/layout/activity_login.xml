@@ -31,11 +31,11 @@
     <EditText
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/loginid"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="17dp"
-        android:hint="text"
+        android:hint="Please enter your ID"
         android:id="@+id/et_loginid"
         />
     </RelativeLayout>
@@ -56,11 +56,11 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/passwordtxt"
             android:password="true"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="17dp"
-            android:hint="text"
+            android:hint="Please enter your PW"
             android:id="@+id/et_passwordtxt"/>
     </RelativeLayout>
     <RelativeLayout

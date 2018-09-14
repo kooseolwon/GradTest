@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gradtest.Adapter.CommentAdapter;
-import com.gradtest.DataType.Board;
 import com.gradtest.DataType.Comment;
 import com.gradtest.DataType.Comment_regist;
 import com.gradtest.ETC.ItemForm;
@@ -61,6 +61,7 @@ public class CommentActivity extends AppCompatActivity {
         board_index = intent.getIntExtra("board_index",1);
 
         rcv = (RecyclerView)findViewById(R.id.recycler_comment);
+        rcv.addItemDecoration(new DividerItemDecoration(getApplication(),DividerItemDecoration.VERTICAL));
         llm = new LinearLayoutManager(this);
         rcv.setHasFixedSize(true);
         rcv.setLayoutManager(llm);
