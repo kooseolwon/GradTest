@@ -60,20 +60,17 @@ public class filterAdapter extends RecyclerView.Adapter<filterViewholder> {
             public void onClick(View v) {
 
                 items.put(position,!(items.get(position)));
+
                 notifyDataSetChanged();
 
             }
 
         });//전국을 누르면 다른 것들이 취소되게!
-        if(position == 0){
 
-        }else{
-            
-        }
 
 
         if(items.get(position)){
-            holder.region.setBackgroundColor(0xFFB985E1);
+            holder.region.setBackgroundColor(0xFFFFBCBC);
 
         }else{
             holder.region.setBackgroundResource(R.drawable.rect);

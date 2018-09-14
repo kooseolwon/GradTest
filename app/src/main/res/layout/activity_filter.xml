@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="22.5"
-        android:background="#CFAFE7"
+        android:background="#FFEBEB"
         android:gravity="bottom"
         android:orientation="vertical">
 
@@ -50,7 +50,7 @@
         android:layout_height="0dp"
         android:layout_margin="4dp"
         android:layout_weight="10"
-        android:background="#b985e1"
+        android:background="#ffbcbc"
         android:gravity="center"
         android:text="선택완료"
         android:textColor="@android:color/white"

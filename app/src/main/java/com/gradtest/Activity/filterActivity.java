@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.gradtest.Adapter.filterAdapter;
 import com.gradtest.ETC.area;
@@ -37,7 +36,6 @@ public class filterActivity extends AppCompatActivity{
 
 
         int size = area.values().length;
-        Toast.makeText(getApplicationContext(), Integer.toString(size), Toast.LENGTH_LONG).show();
 
 
         rcv = (RecyclerView)findViewById(R.id.recyclerview_selectarea_area);
@@ -63,7 +61,7 @@ public class filterActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                System.out.println("들어왔"+map);
+               // System.out.println("들어왔"+map);
                 for(int a = 0; a<map.size();a++){
                     if(map.get(a)){
                         arr.add(a);
