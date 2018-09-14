@@ -155,22 +155,7 @@
             app:srcCompat="@drawable/cam" />
 
 
-        <ImageButton
-            android:id="@+id/rec"
-            android:onClick="onClick"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1.00"
-            android:background="#00FFFFFF"
 
-
-            android:paddingBottom="10dp"
-
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            app:srcCompat="@drawable/rec"
-            android:scaleType="fitCenter"/>
 
         <ImageButton
             android:id="@+id/pin"

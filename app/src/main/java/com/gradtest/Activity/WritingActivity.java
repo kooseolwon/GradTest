@@ -79,7 +79,7 @@ public class WritingActivity extends AppCompatActivity {
 
     String b_title, b_content;
     File photo, imageFile;
-    int b_category = 0;
+    int b_category;
     String pin,real;
     int index_temp, userindex;
     Call<Board> res;
@@ -92,6 +92,7 @@ public class WritingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
 
+        b_category = 0;
 
 
         SharedPreferences pinCheck = getSharedPreferences("pinCheck", Activity.MODE_PRIVATE);
@@ -133,12 +134,6 @@ public class WritingActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton rec_btn = (ImageButton)findViewById(R.id.rec);
-        rec_btn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Toast.makeText(getApplicationContext(),"음성녹음하기",Toast.LENGTH_LONG).show();
-            }
-        });
 
         ImageButton pin_btn = (ImageButton)findViewById(R.id.pin);
         pin_btn.setOnClickListener(new View.OnClickListener(){
