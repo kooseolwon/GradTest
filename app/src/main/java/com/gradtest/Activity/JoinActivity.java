@@ -55,7 +55,7 @@ public class JoinActivity extends AppCompatActivity {
                 Log.i("값 : ", String.valueOf(tv.getText()));
                 Log.i("are_temp : ", String.valueOf(area_temp));
                 if(position==1) {
-                    area_temp = 0;
+                    area_temp = 26;
                     Log.i("are_temp : ", String.valueOf(area_temp));
                 }
             }
