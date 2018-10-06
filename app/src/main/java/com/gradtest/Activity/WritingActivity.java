@@ -109,6 +109,7 @@ public class WritingActivity extends AppCompatActivity {
         Log.d("아이디",""+index_temp);
 
         pin = intent.getStringExtra("pin");
+        locationCheck = intent.getBooleanExtra("checkPin",false);
 
         ActionBar ab = getSupportActionBar();
         ab.setIcon(R.mipmap.logo);
@@ -295,6 +296,7 @@ public class WritingActivity extends AppCompatActivity {
 
                     SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
                     if (location != null) {
+
                         board_location = RequestBody.create(MediaType.parse("text"), pin.getBytes());
                         Log.d("swsw2", "location_" + board_location.toString());
                     } else {

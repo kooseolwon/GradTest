@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gradtest.Adapter.WritingAdapter;
 import com.gradtest.ETC.ItemForm;
 import com.gradtest.ETC.MyLog;
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         et_id = (EditText)findViewById(R.id.et_loginid);
         et_pw = (EditText)findViewById(R.id.et_passwordtxt);

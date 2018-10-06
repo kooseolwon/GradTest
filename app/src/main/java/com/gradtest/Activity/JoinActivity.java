@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.gradtest.ETC.MyLog;
 import com.gradtest.Net.Net;
 import com.gradtest.R;
@@ -32,15 +33,13 @@ public class JoinActivity extends AppCompatActivity {
     EditText et_name,et_id,et_pw;
     Spinner star_area;
     ArrayAdapter<CharSequence> array3;
+    String dt;
     int area_temp;
-    boolean areaCheck;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        areaCheck = false;
         et_name = (EditText)findViewById(R.id.signup_name);
         et_id = (EditText)findViewById(R.id.signup_id);
         et_pw = (EditText)findViewById(R.id.signup_pw);
@@ -50,11 +49,15 @@ public class JoinActivity extends AppCompatActivity {
         star_area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                areaCheck = true;
-                area_temp = position+1;
+                area_temp = position-1;
                 TextView tv = (TextView)view;
                 Log.i("포지션 : ",String.valueOf(position));
                 Log.i("값 : ", String.valueOf(tv.getText()));
+                Log.i("are_temp : ", String.valueOf(area_temp));
+                if(position==1) {
+                    area_temp = 0;
+                    Log.i("are_temp : ", String.valueOf(area_temp));
+                }
             }
 
             @Override
@@ -88,13 +91,11 @@ public class JoinActivity extends AppCompatActivity {
                 user.setUser_id(id);
                 user.setUser_name(name);
                 user.setUser_pw(pw);
+                dt = FirebaseInstanceId.getInstance().getToken();
+                user.setDeviceToken(dt);
 
-                if(areaCheck){
-                    user.setUser_area(area_temp);
-                }else{
-                    area_temp = 0;
-                    user.setUser_area(area_temp);
-                }
+                user.setUser_area(area_temp);
+                Log.i("area_temp : ", String.valueOf(area_temp));
 
 
                /* Req_join req_join = new Req_join();

@@ -10,11 +10,12 @@ public class User {
 
     public User(){}
 
-    public User(String user_id, String user_pw, String user_name, int user_area){
+    public User(String user_id, String user_pw, String user_name, int user_area, String deviceToken){
         this.user_id = user_id;
         this.user_pw = user_pw;
         this.user_name = user_name;
         this.user_area=user_area;
+        this.deviceToken=deviceToken;
 
     }
 
@@ -46,6 +47,16 @@ public class User {
     String user_id;
     String user_pw;
     String user_name;
+    String deviceToken;
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
     int user_area;
 
     public int getUser_area() {

@@ -99,6 +99,7 @@ public class MapActivity extends AppCompatActivity
                Toast.makeText(getApplicationContext(),"위치저장완료"+pin_text,Toast.LENGTH_LONG).show();
                Intent intent_add = new Intent(MapActivity.this, WritingActivity.class);
                intent_add.putExtra("pin",pin_text);
+               intent_add.putExtra("checkPin",true);
                startActivity(intent_add);
 
                SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);

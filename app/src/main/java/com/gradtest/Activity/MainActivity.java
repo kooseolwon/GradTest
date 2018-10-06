@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gradtest.Adapter.WritingAdapter;
 import com.gradtest.DataType.Board;
 import com.gradtest.ETC.ItemForm;
@@ -212,5 +213,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("notice");
+
     }
 }
