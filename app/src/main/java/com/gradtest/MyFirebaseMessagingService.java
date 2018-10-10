@@ -39,7 +39,7 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logo_image).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.logo_image) )
-                .setContentTitle("글이 등록되었습니다.")
+                .setContentTitle("관심지역에 글이 등록되었습니다.")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri).setLights(000000255,500,2000)

@@ -42,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -296,7 +297,6 @@ public class WritingActivity extends AppCompatActivity {
 
                     SharedPreferences location = getSharedPreferences("location", Activity.MODE_PRIVATE);
                     if (location != null) {
-
                         board_location = RequestBody.create(MediaType.parse("text"), pin.getBytes());
                         Log.d("swsw2", "location_" + board_location.toString());
                     } else {
@@ -348,8 +348,8 @@ public class WritingActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(WritingActivity.this, "글쓰기 완료!", Toast.LENGTH_SHORT).show();
                             //Log.d("swsw","d"+board.getBoard_title());
+
                             Intent intent = new Intent(WritingActivity.this, MainActivity.class);
-                            //intent.putExtra("title",b_title);
                             //intent.putExtra("content",b_content);
                             //intent.putExtra("switch",1);
 
